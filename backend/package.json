@@ -1,0 +1,19 @@
+{
+  "name": "@tribal/backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=../.env src/index.ts",
+    "build": "tsc -b",
+    "start": "node --env-file-if-exists=../.env dist/index.js",
+    "cli": "tsx --env-file-if-exists=../.env src/cli.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "2.1.5",
+    "hono": "4.13.13"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "tsx": "4.23.15"
+  }
+}

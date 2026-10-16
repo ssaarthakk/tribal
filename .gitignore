@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.env*
+!.env.example
+.falkordb/
+falkordb-data/
+.DS_Store
+Thumbs.db
+desktop.ini
+*playbook*.md

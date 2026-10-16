@@ -1,0 +1,22 @@
+{
+  "name": "tribal",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "backend",
+    "web"
+  ],
+  "scripts": {
+    "format": "bash scripts/format.sh",
+    "check": "bash scripts/check.sh"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.13.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2",
+    "vitest": "5.0.5"
+  }
+}
