@@ -151,7 +151,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
 
 ## Phase 8: Deployment
 
-- [ ] **8.1 Cloudflare Workers check (time-boxed: 30 minutes)**
+- [x] **8.1 Cloudflare Workers check (time-boxed: 30 minutes)**
   - **Goal:** Find out in a real test whether the `falkordb` client can reach FalkorDB Cloud from a Worker.
   - **Files:** none in the repo. Work in the scratchpad directory only.
   - **Spec:** a throwaway Worker (scratchpad folder with its own `package.json` using `falkordb` 6.8.0, `wrangler.toml` with `compatibility_flags = ["nodejs_compat"]` and a recent `compatibility_date`) whose fetch handler connects with `FalkorDB.connect` and returns the result of `RETURN 1`. Secrets are set with `wrangler secret put` by piping values from `.env` through a shell (`set -a; . ./.env; set +a; printf %s "$FALKORDB_PASSWORD" | wrangler secret put FALKORDB_PASSWORD`), never printed. `wrangler deploy`, request it with `curl`, then `wrangler delete` the Worker.
@@ -162,8 +162,9 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** none.
   - **Verify:** `wrangler deployments list` shows no leftover Worker.
   - **Out of scope:** changing the backend.
+    Note: PASS. A Worker with `falkordb` 6.8.0 and `nodejs_compat` connected to FalkorDB Cloud and returned `{"ok":true,"result":[{"nodes":16426}]}` from `MATCH (n) RETURN count(n)` on the `tribal` graph. It ran that query instead of `RETURN 1` because `roQuery` on a graph key that doesn't exist fails with `ERR Invalid graph operation on empty key`. The Worker was deleted afterwards (URL now returns 404). The user chose to stay on Render as planned.
 
-- [ ] **8.2 Backend ready for Render**
+- [x] **8.2 Backend ready for Render**
   - **Goal:** Make the backend deployable on Render's free tier and keep it and FalkorDB Cloud awake.
   - **Files:** create `render.yaml`, `.github/workflows/keepalive.yml`, `backend/src/server.test.ts`; modify `backend/src/server.ts`.
   - **Spec:**
@@ -205,6 +206,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** `server.test.ts`: `ensureSeeded` on a fresh `tribal_test_` graph with the fixture paths → `true` and 75 nodes; again → `false`.
   - **Verify:** the build-and-start command from criterion 2.
   - **Out of scope:** the Render dashboard (8.3).
+    Note: Region left at `singapore`; the FalkorDB Cloud region couldn't be read without opening `.env`, so change it in Render if the instance isn't in Asia. Criterion 2 was verified in a scratchpad copy of the repo because `npm ci` in the repo fails with EPERM while the local Vite dev server holds a rolldown binary.
 
 - [ ] **8.3 [MANUAL] Deploy the backend on Render**
   - **Goal:** The backend runs on Render, connected to FalkorDB Cloud.
