@@ -1,0 +1,9 @@
+{
+  "repo": "FalkorDB/FalkorDB",
+  "since": "2025-04-16",
+  "componentDepth": 2,
+  "deeperPrefixes": ["graph/src"],
+  "ignorePrefixes": ["deps/", "build/graphblas/"],
+  "minComponentCommits": 8,
+  "maxDecisionThreads": 300
+}

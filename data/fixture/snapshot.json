@@ -1,0 +1,533 @@
+{
+  "fetchedAt": "2026-10-01T00:00:00.000Z",
+  "defaultBranch": "main",
+  "config": {
+    "repo": "tribal-fixture/shop",
+    "since": "2025-01-01",
+    "componentDepth": 2,
+    "deeperPrefixes": [],
+    "ignorePrefixes": ["vendor/"],
+    "minComponentCommits": 2,
+    "maxDecisionThreads": 10
+  },
+  "bots": ["dependabot[bot]"],
+  "commits": [
+    {
+      "sha": "c010000000000000000000000000000000000000",
+      "message": "Add connection pool",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c010000000000000000000000000000000000000",
+      "authorLogin": "alice",
+      "authorName": "Alice Ng",
+      "authorEmailHash": "e1a1",
+      "files": [{ "path": "src/db/pool.ts", "additions": 5, "deletions": 2 }]
+    },
+    {
+      "sha": "c020000000000000000000000000000000000000",
+      "message": "Use one pool for all queries",
+      "authoredAt": "2026-04-04T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c020000000000000000000000000000000000000",
+      "authorLogin": "alice",
+      "authorName": "Alice Ng",
+      "authorEmailHash": "e1a1",
+      "files": [{ "path": "src/db/schema.ts", "additions": 10, "deletions": 5 }]
+    },
+    {
+      "sha": "c030000000000000000000000000000000000000",
+      "message": "Create initial schema",
+      "authoredAt": "2025-04-09T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c030000000000000000000000000000000000000",
+      "authorLogin": "bob",
+      "authorName": "Bob Okafor",
+      "authorEmailHash": "e2b2",
+      "files": [
+        { "path": "src/db/schema.ts", "additions": 20, "deletions": 11 }
+      ]
+    },
+    {
+      "sha": "c040000000000000000000000000000000000000",
+      "message": "Fix route order",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c040000000000000000000000000000000000000",
+      "authorLogin": "alice",
+      "authorName": "Alice Ng",
+      "authorEmailHash": "e1a1",
+      "files": [{ "path": "src/api/routes.ts", "additions": 2, "deletions": 1 }]
+    },
+    {
+      "sha": "c050000000000000000000000000000000000000",
+      "message": "Add health route",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c050000000000000000000000000000000000000",
+      "authorLogin": "bob",
+      "authorName": "Bob Okafor",
+      "authorEmailHash": "e2b2",
+      "files": [{ "path": "src/api/routes.ts", "additions": 4, "deletions": 3 }]
+    },
+    {
+      "sha": "c060000000000000000000000000000000000000",
+      "message": "Switch to cursor pagination",
+      "authoredAt": "2026-04-04T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c060000000000000000000000000000000000000",
+      "authorLogin": "bob",
+      "authorName": "Bob Okafor",
+      "authorEmailHash": "e2b2",
+      "files": [
+        { "path": "src/api/pagination.ts", "additions": 12, "deletions": 3 }
+      ]
+    },
+    {
+      "sha": "c070000000000000000000000000000000000000",
+      "message": "Add offset pagination",
+      "authoredAt": "2025-10-06T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c070000000000000000000000000000000000000",
+      "authorLogin": "alice",
+      "authorName": "Alice Ng",
+      "authorEmailHash": "e1a1",
+      "files": [
+        { "path": "src/api/pagination.ts", "additions": 6, "deletions": 1 }
+      ]
+    },
+    {
+      "sha": "c080000000000000000000000000000000000000",
+      "message": "Add login form handler",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c080000000000000000000000000000000000000",
+      "authorLogin": "carol",
+      "authorName": "Carol Diaz",
+      "authorEmailHash": "e3c3",
+      "files": [
+        { "path": "src/auth/login.ts", "additions": 10, "deletions": 5 }
+      ]
+    },
+    {
+      "sha": "c090000000000000000000000000000000000000",
+      "message": "Store sessions in cookies",
+      "authoredAt": "2026-04-04T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c090000000000000000000000000000000000000",
+      "authorLogin": "carol",
+      "authorName": "Carol Diaz",
+      "authorEmailHash": "e3c3",
+      "files": [
+        { "path": "src/auth/session.ts", "additions": 5, "deletions": 2 }
+      ]
+    },
+    {
+      "sha": "c100000000000000000000000000000000000000",
+      "message": "Add app shell",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c100000000000000000000000000000000000000",
+      "authorLogin": "dave",
+      "authorName": "Dave Kim",
+      "authorEmailHash": "e4d4",
+      "files": [{ "path": "src/ui/app.tsx", "additions": 3, "deletions": 0 }]
+    },
+    {
+      "sha": "c110000000000000000000000000000000000000",
+      "message": "Add focus ring to buttons",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c110000000000000000000000000000000000000",
+      "authorLogin": "erin",
+      "authorName": "Erin Walsh",
+      "authorEmailHash": "e5e5",
+      "files": [{ "path": "src/ui/button.tsx", "additions": 5, "deletions": 2 }]
+    },
+    {
+      "sha": "c120000000000000000000000000000000000000",
+      "message": "Darken link colour",
+      "authoredAt": "2026-04-04T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c120000000000000000000000000000000000000",
+      "authorLogin": "carol",
+      "authorName": "Carol Diaz",
+      "authorEmailHash": "e3c3",
+      "files": [{ "path": "src/ui/theme.css", "additions": 2, "deletions": 1 }]
+    },
+    {
+      "sha": "c130000000000000000000000000000000000000",
+      "message": "Add routing",
+      "authoredAt": "2026-04-04T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c130000000000000000000000000000000000000",
+      "authorLogin": "dave",
+      "authorName": "Dave Kim",
+      "authorEmailHash": "e4d4",
+      "files": [{ "path": "src/ui/app.tsx", "additions": 10, "deletions": 5 }]
+    },
+    {
+      "sha": "c140000000000000000000000000000000000000",
+      "message": "Document the pool",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c140000000000000000000000000000000000000",
+      "authorLogin": "alice",
+      "authorName": "Alice Ng",
+      "authorEmailHash": "e1a1",
+      "files": [{ "path": "docs/db.md", "additions": 2, "deletions": 1 }]
+    },
+    {
+      "sha": "c150000000000000000000000000000000000000",
+      "message": "Write the UI guide",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c150000000000000000000000000000000000000",
+      "authorLogin": "erin",
+      "authorName": "Erin Walsh",
+      "authorEmailHash": "e5e5",
+      "files": [{ "path": "docs/ui.md", "additions": 5, "deletions": 2 }]
+    },
+    {
+      "sha": "c160000000000000000000000000000000000000",
+      "message": "Add API and UI tests",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c160000000000000000000000000000000000000",
+      "authorLogin": "dave",
+      "authorName": "Dave Kim",
+      "authorEmailHash": "e4d4",
+      "files": [
+        { "path": "tests/api.test.ts", "additions": 1, "deletions": 0 },
+        { "path": "tests/ui.test.ts", "additions": 1, "deletions": 1 }
+      ]
+    },
+    {
+      "sha": "c170000000000000000000000000000000000000",
+      "message": "Test buttons, vendor lib",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c170000000000000000000000000000000000000",
+      "authorLogin": "erin",
+      "authorName": "Erin Walsh",
+      "authorEmailHash": "e5e5",
+      "files": [
+        { "path": "tests/ui.test.ts", "additions": 3, "deletions": 0 },
+        { "path": "vendor/lib.js", "additions": 100, "deletions": 0 }
+      ]
+    },
+    {
+      "sha": "c180000000000000000000000000000000000000",
+      "message": "Add db test",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c180000000000000000000000000000000000000",
+      "authorLogin": null,
+      "authorName": "D. Kim",
+      "authorEmailHash": "e4d4",
+      "files": [{ "path": "tests/db.test.ts", "additions": 1, "deletions": 0 }]
+    },
+    {
+      "sha": "c190000000000000000000000000000000000000",
+      "message": "Add auth test",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c190000000000000000000000000000000000000",
+      "authorLogin": null,
+      "authorName": " carol  diaz ",
+      "authorEmailHash": "e9c9",
+      "files": [
+        { "path": "tests/auth.test.ts", "additions": 3, "deletions": 0 }
+      ]
+    },
+    {
+      "sha": "c200000000000000000000000000000000000000",
+      "message": "Bump release script",
+      "authoredAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/commit/c200000000000000000000000000000000000000",
+      "authorLogin": "dependabot[bot]",
+      "authorName": "dependabot[bot]",
+      "authorEmailHash": "e0b0",
+      "files": [
+        { "path": "scripts/release.sh", "additions": 1, "deletions": 1 },
+        { "path": "README.md", "additions": 1, "deletions": 0 }
+      ]
+    }
+  ],
+  "pullRequests": [
+    {
+      "number": 1,
+      "title": "Add connection pool",
+      "body": "Adds a pool to src/db.",
+      "state": "merged",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "mergedAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/pull/1",
+      "authorLogin": "alice",
+      "mergeCommitSha": "c010000000000000000000000000000000000000",
+      "closesIssues": [],
+      "reviews": [
+        {
+          "reviewerLogin": "carol",
+          "state": "APPROVED",
+          "submittedAt": "2026-10-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Switch to cursor pagination",
+      "body": "Replaces offset pagination. Fixes #9",
+      "state": "merged",
+      "createdAt": "2026-04-04T00:00:00.000Z",
+      "mergedAt": "2026-04-04T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/pull/2",
+      "authorLogin": "bob",
+      "mergeCommitSha": "c060000000000000000000000000000000000000",
+      "closesIssues": [9],
+      "reviews": [
+        {
+          "reviewerLogin": "alice",
+          "state": "APPROVED",
+          "submittedAt": "2026-04-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Use one pool for all queries",
+      "body": "Opening a connection per request is too slow.",
+      "state": "merged",
+      "createdAt": "2026-04-04T00:00:00.000Z",
+      "mergedAt": "2026-04-04T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/pull/3",
+      "authorLogin": "alice",
+      "mergeCommitSha": "c020000000000000000000000000000000000000",
+      "closesIssues": [],
+      "reviews": [
+        {
+          "reviewerLogin": "dave",
+          "state": "COMMENTED",
+          "submittedAt": "2026-04-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Add login form handler",
+      "body": "Handles the login form.",
+      "state": "merged",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "mergedAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/pull/4",
+      "authorLogin": "carol",
+      "mergeCommitSha": "c080000000000000000000000000000000000000",
+      "closesIssues": [],
+      "reviews": [
+        {
+          "reviewerLogin": "alice",
+          "state": "CHANGES_REQUESTED",
+          "submittedAt": "2026-04-04T00:00:00.000Z"
+        },
+        {
+          "reviewerLogin": "alice",
+          "state": "APPROVED",
+          "submittedAt": "2026-10-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Add app shell",
+      "body": "Adds the app shell.",
+      "state": "merged",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "mergedAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/pull/5",
+      "authorLogin": "dave",
+      "mergeCommitSha": "c100000000000000000000000000000000000000",
+      "closesIssues": [],
+      "reviews": [
+        {
+          "reviewerLogin": "erin",
+          "state": "APPROVED",
+          "submittedAt": "2026-10-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Add focus ring to buttons",
+      "body": "Fixes #11",
+      "state": "merged",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "mergedAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/pull/6",
+      "authorLogin": "erin",
+      "mergeCommitSha": "c110000000000000000000000000000000000000",
+      "closesIssues": [11],
+      "reviews": [
+        {
+          "reviewerLogin": "dave",
+          "state": "APPROVED",
+          "submittedAt": "2026-10-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Document the pool",
+      "body": "Docs for src/db.",
+      "state": "merged",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "mergedAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/pull/7",
+      "authorLogin": "alice",
+      "mergeCommitSha": "c140000000000000000000000000000000000000",
+      "closesIssues": [],
+      "reviews": [
+        {
+          "reviewerLogin": "erin",
+          "state": "APPROVED",
+          "submittedAt": "2026-10-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Add read replicas to the db layer",
+      "body": "Work in progress.",
+      "state": "open",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "mergedAt": null,
+      "url": "https://github.com/tribal-fixture/shop/pull/8",
+      "authorLogin": "alice",
+      "mergeCommitSha": null,
+      "closesIssues": [],
+      "reviews": []
+    }
+  ],
+  "issues": [
+    {
+      "number": 9,
+      "title": "Offset pagination is slow on large tables",
+      "body": "List endpoints time out on big tables.",
+      "state": "closed",
+      "createdAt": "2025-10-06T00:00:00.000Z",
+      "closedAt": "2026-04-04T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/issues/9",
+      "authorLogin": "bob"
+    },
+    {
+      "number": 10,
+      "title": "Session tokens expire too early",
+      "body": "Users get logged out after five minutes.",
+      "state": "open",
+      "createdAt": "2026-04-04T00:00:00.000Z",
+      "closedAt": null,
+      "url": "https://github.com/tribal-fixture/shop/issues/10",
+      "authorLogin": "carol"
+    },
+    {
+      "number": 11,
+      "title": "Button focus ring missing",
+      "body": "Keyboard users cannot see focus.",
+      "state": "closed",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "closedAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/issues/11",
+      "authorLogin": "erin"
+    },
+    {
+      "number": 12,
+      "title": "Document the connection pool settings",
+      "body": "Pool size and timeouts are undocumented.",
+      "state": "open",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "closedAt": null,
+      "url": "https://github.com/tribal-fixture/shop/issues/12",
+      "authorLogin": "alice"
+    },
+    {
+      "number": 13,
+      "title": "Flaky UI test",
+      "body": "The app shell test fails sometimes.",
+      "state": "closed",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "closedAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/issues/13",
+      "authorLogin": "dave"
+    },
+    {
+      "number": 14,
+      "title": "Rate limit the public API",
+      "body": "We need per-key limits.",
+      "state": "open",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "closedAt": null,
+      "url": "https://github.com/tribal-fixture/shop/issues/14",
+      "authorLogin": "bob"
+    }
+  ],
+  "comments": [
+    {
+      "id": "ic-1",
+      "body": "We chose offset pagination last year because it was simple.",
+      "createdAt": "2025-10-06T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/issues/9#ic-1",
+      "authorLogin": "alice",
+      "parent": { "kind": "issue", "number": 9 }
+    },
+    {
+      "id": "ic-2",
+      "body": "Decision: switch list endpoints to cursor pagination instead of offset.",
+      "createdAt": "2026-04-04T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/issues/9#ic-2",
+      "authorLogin": "bob",
+      "parent": { "kind": "issue", "number": 9 }
+    },
+    {
+      "id": "ic-3",
+      "body": "Agreed, cursors scale better. Offset pagination is superseded.",
+      "createdAt": "2026-04-04T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/issues/9#ic-3",
+      "authorLogin": "alice",
+      "parent": { "kind": "issue", "number": 9 }
+    },
+    {
+      "id": "rc-1",
+      "body": "Decision: use one shared pool instead of a connection per request.",
+      "createdAt": "2026-04-04T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/pull/3#rc-1",
+      "authorLogin": "alice",
+      "parent": { "kind": "pr", "number": 3 }
+    },
+    {
+      "id": "ic-4",
+      "body": "Looks good to me.",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/pull/5#ic-4",
+      "authorLogin": "erin",
+      "parent": { "kind": "pr", "number": 5 }
+    },
+    {
+      "id": "ic-5",
+      "body": "Retrying fixed it locally.",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/issues/13#ic-5",
+      "authorLogin": "dave",
+      "parent": { "kind": "issue", "number": 13 }
+    },
+    {
+      "id": "rc-2",
+      "body": "Please validate the email field.",
+      "createdAt": "2025-10-06T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/pull/4#rc-2",
+      "authorLogin": "bob",
+      "parent": { "kind": "pr", "number": 4 }
+    }
+  ],
+  "docs": [
+    {
+      "path": "docs/db.md",
+      "title": "Database layer",
+      "body": "How src/db manages connections and the pool.",
+      "updatedAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/blob/main/docs/db.md"
+    },
+    {
+      "path": "docs/ui.md",
+      "title": "UI guide",
+      "body": "Components in src/ui and the theme.",
+      "updatedAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/blob/main/docs/ui.md"
+    },
+    {
+      "path": "README.md",
+      "title": "Shop",
+      "body": "A small shop. The HTTP API lives in src/api.",
+      "updatedAt": "2026-10-01T00:00:00.000Z",
+      "url": "https://github.com/tribal-fixture/shop/blob/main/README.md"
+    }
+  ]
+}

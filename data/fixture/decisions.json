@@ -1,0 +1,46 @@
+{
+  "entries": [
+    {
+      "threadKey": "issue-9",
+      "contentHash": "fixture",
+      "decisions": [
+        {
+          "id": "issue-9-1",
+          "summary": "Use offset pagination for list endpoints",
+          "rationale": "It was the simplest option.",
+          "decidedAt": "2025-10-06T00:00:00.000Z",
+          "madeBy": ["alice"],
+          "affects": ["src/api"],
+          "supersedes": [],
+          "confidence": 0.8
+        },
+        {
+          "id": "issue-9-2",
+          "summary": "Use cursor pagination for list endpoints",
+          "rationale": "Offset pagination is slow on large tables.",
+          "decidedAt": "2026-04-04T00:00:00.000Z",
+          "madeBy": ["bob", "alice"],
+          "affects": ["src/api"],
+          "supersedes": ["issue-9-1"],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-3",
+      "contentHash": "fixture",
+      "decisions": [
+        {
+          "id": "pr-3-1",
+          "summary": "Use one shared connection pool in the database layer",
+          "rationale": "Opening a connection per request is too slow.",
+          "decidedAt": "2026-04-04T00:00:00.000Z",
+          "madeBy": ["alice"],
+          "affects": ["src/db"],
+          "supersedes": [],
+          "confidence": 0.9
+        }
+      ]
+    }
+  ]
+}

@@ -10,6 +10,13 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
+    services:
+      falkordb:
+        image: falkordb/falkordb:v4.22.0
+        ports: ["6379:6379"]
+    env:
+      FALKORDB_HOST: localhost
+      FALKORDB_PORT: "6379"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1

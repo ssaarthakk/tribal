@@ -6,7 +6,7 @@ Graph tests use `withFixtureGraph()` (task 2.2) on the FalkorDB instance in `.en
 
 ## Schedule
 
-Planning started Friday 16 October, 17:50 IST. Submission target: **Sunday 18 October, 18:00 IST**. Sessions assume about 45 minutes each, including `/commit` and `/clear`.
+Planning started Friday 16 October, 17:50 IST. Submission target: **Sunday 18 October, 18:00 IST**. Sessions assume about 45 minutes each, including `/clear`. `/commit` runs once at the end of each phase, after its last task.
 
 | Phase                          | Tasks   | Sessions | Target finish (IST)               |
 | ------------------------------ | ------- | -------- | --------------------------------- |
@@ -41,7 +41,7 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
 
 ## Phase 1: Foundation
 
-- [ ] **1.1 Environment config**
+- [x] **1.1 Environment config**
   - **Goal:** Parse and validate every environment variable in one module, and remove the `greet` placeholder.
   - **Files:** create `backend/src/env.ts`, `backend/src/env.test.ts`; delete `backend/src/greet.ts`, `backend/src/greet.test.ts`; modify `backend/src/cli.ts`, `backend/src/index.ts`, `backend/package.json`, `.env.example`.
   - **Spec:**
@@ -71,7 +71,7 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Verify:** `bash scripts/doctor.sh` lists the new variable names.
   - **Out of scope:** database code, CLI commands, the web app.
 
-- [ ] **1.2 Database connection, CI graph and the FalkorDB MCP dev graph**
+- [x] **1.2 Database connection, CI graph and the FalkorDB MCP dev graph**
   - **Goal:** One module that connects to FalkorDB and runs validated queries, a FalkorDB service in CI, and FalkorDB's MCP server pointed at the dev graph.
   - **Files:** create `backend/src/db.ts`, `backend/src/queries.ts`, `backend/src/db.test.ts`, `scripts/falkordb-mcp.sh`; modify `vitest.config.ts`, `.github/workflows/ci.yml`, `.mcp.json`, `backend/package.json`.
   - **Spec:**
@@ -105,8 +105,12 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Tests:** `db.test.ts` (uses `loadEnv()` and a random `tribal_test_` graph name): (a) PING returns `[{ one: 1 }]`; (b) PING with schema `z.object({ one: z.string() })` rejects; (c) `deleteGraph()` on a never-created graph resolves; (d) `read(COUNT_NODES, …)` on a never-created graph returns `[]`.
   - **Verify:** `npm run check` (runs against Cloud). Then, in a throwaway script in the scratchpad directory (not committed, Cypher allowed there), on a throwaway graph with three `Person` nodes joined by `COLLABORATES_WITH` edges in one direction only, run `algo.pageRank`, `algo.betweenness` and `db.idx.fulltext.createNodeIndex`/`queryNodes` exactly as ARCH §3, and delete the graph. Add one `Note:` line with: the server version, whether each call worked, and whether betweenness counted the one-way edges as directed. If any procedure fails, stop and ask.
   - **Out of scope:** loading data, other queries. Testing the MCP server itself happens at the start of task 1.3, because MCP servers load when a session starts.
+    Note: FalkorDB's missing-graph error is exactly `ERR Invalid graph operation on empty key`. It is returned by `GRAPH.RO_QUERY` (even for `RETURN 1`) and by `GRAPH.DELETE`, so `db.test.ts` runs `db.write(PING)` first in tests (a) and (b) to create the graph; `read(PING)` on a never-created graph returns `[]`, not `[{ one: 1 }]`. Each test opens its own random graph.
+    Note: Cloud instance: FalkorDB graph module 42200 (v4.22.0), CI service pinned to `falkordb/falkordb:v4.22.0`. On a throwaway graph all procedures worked as in ARCH §3: `algo.pageRank` (a→b and c→b gave b 0.574, a and c 0.213 each), `algo.betweenness` (all 0 for a→b and c→b, so it treats edges as directed; storing both directions as ARCH says stays correct), `db.idx.fulltext.createNodeIndex` and `queryNodes` (`'retry|typo'` matched both PRs). The throwaway graph was deleted.
+    Note: The FalkorDB MCP server (`scripts/falkordb-mcp.sh`) has not been started yet; task 1.3 tests it at session start.
+    Note: Task 1.3 tested it. The session's own connection to `falkordb` closed at startup (likely the first `npx` download), but running `bash scripts/falkordb-mcp.sh` over stdio worked: it initialised, listed 7 tools including `list_graphs`, and `list_graphs` returned an empty list. No script change was needed; if the connection still fails in a fresh session, run `/mcp` to reconnect.
 
-- [ ] **1.3 Data file schemas and the fixture**
+- [x] **1.3 Data file schemas and the fixture**
   - **Goal:** zod schemas and helpers for every file in `data/`, the demo config, and the synthetic fixture.
   - **Files:** create `backend/src/datafiles.ts`, `backend/src/datafiles.test.ts`, `data/config.json`, `data/fixture/snapshot.json`, `data/fixture/decisions.json`; delete `data/.gitkeep`.
   - **Spec:**
@@ -121,8 +125,9 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Tests:** `datafiles.test.ts`: (a) `readJsonFile(DATA_FILES.fixtureSnapshot, SnapshotSchema)` has the counts above and `fetchedAt` `2026-10-01T00:00:00.000Z`; (b) fixture decisions have 2 entries and 3 decisions in total; (c) `data/config.json` parses and has repo `FalkorDB/FalkorDB`; (d) `readJsonFileOr` on a missing file in `os.tmpdir()` returns the fallback; (e) `writeJsonFile` then `readJsonFile` round-trips an object in `os.tmpdir()`.
   - **Verify:** `npm run check`.
   - **Out of scope:** loading into the graph, fetching.
+    Note: `datafiles.ts` resolves paths with `path.resolve(repoRoot, path)` instead of `new URL(...)`, so absolute paths (the `os.tmpdir()` tests) pass through unchanged.
 
-- [ ] **1.4 Health route, server, CLI skeleton and the typed web client**
+- [x] **1.4 Health route, server, CLI skeleton and the typed web client**
   - **Goal:** A running Hono API with `GET /api/health`, a CLI with `serve`, and the web app calling it through the typed Hono client.
   - **Files:** create `backend/src/app.ts`, `backend/src/app.test.ts`, `backend/src/server.ts`, `backend/src/risk.ts`, `web/src/api.ts`; modify `backend/src/cli.ts`, `backend/package.json`, `web/package.json`, `web/src/App.tsx`, `web/vite.config.ts`, `web/tsconfig.json`; delete `backend/src/index.ts`.
   - **Spec:**

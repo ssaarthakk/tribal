@@ -3,14 +3,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch --env-file-if-exists=../.env src/index.ts",
+    "dev": "tsx watch --env-file-if-exists=../.env src/cli.ts serve",
     "build": "tsc -b",
-    "start": "node --env-file-if-exists=../.env dist/index.js",
+    "start": "node --env-file-if-exists=../.env dist/cli.js serve",
     "cli": "tsx --env-file-if-exists=../.env src/cli.ts"
   },
   "dependencies": {
     "@hono/node-server": "2.1.5",
-    "hono": "4.13.13"
+    "falkordb": "6.8.0",
+    "hono": "4.13.13",
+    "zod": "4.6.5"
   },
   "devDependencies": {
     "@types/node": "24.19.2",
