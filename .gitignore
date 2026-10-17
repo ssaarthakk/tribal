@@ -10,3 +10,4 @@ falkordb-data/
 Thumbs.db
 desktop.ini
 *playbook*.md
+scripts/auto-feature.sh

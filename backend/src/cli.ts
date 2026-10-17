@@ -16,6 +16,7 @@ import { createRepoSource } from "./github.js";
 import { buildSnapshot } from "./ingest.js";
 import { createLlm } from "./llm.js";
 import { countByLabel, countByRelationship, loadSnapshot } from "./load.js";
+import { startMcpServer } from "./mcp.js";
 import { getTeamRanking, simulateDeparture } from "./risk.js";
 import { startServer } from "./server.js";
 
@@ -26,7 +27,8 @@ Commands:
   fetch            Fetch the repo from GitHub into the snapshot file
   load [--fixture] Rebuild the graph from the data files
   extract-decisions  Extract decisions from PR and issue threads with the LLM
-  handovers        Cache handover plans for the top 5 people with the LLM`;
+  handovers        Cache handover plans for the top 5 people with the LLM
+  mcp              Start the MCP server on stdio`;
 
 async function fetchCommand(): Promise<void> {
   const config = await readJsonFile(DATA_FILES.config, RepoConfigSchema);
@@ -136,6 +138,9 @@ switch (process.argv[2]) {
     break;
   case "handovers":
     await handoversCommand();
+    break;
+  case "mcp":
+    await startMcpServer(loadEnv());
     break;
   default:
     console.error(USAGE);
