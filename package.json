@@ -4,7 +4,8 @@
   "type": "module",
   "workspaces": [
     "backend",
-    "web"
+    "web",
+    "video"
   ],
   "scripts": {
     "format": "bash scripts/format.sh",

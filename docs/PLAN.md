@@ -24,12 +24,12 @@ Planning started Friday 16 October, 17:50 IST. Submission target: **Sunday 18 Oc
 | 10 Stretch                     | S1–S3   | 3        | only if ahead                     |
 
 - **Deployment comes before UI polish.** Task 7.6 (polish and accessibility pass) runs after Phase 8, because a live deployment is required for the submission and polish isn't. This is the only reordering.
-- **Cuts if behind schedule**, in this order: all stretch items (S1, S2, S3); task 7.6 reduced to keyboard and contrast fixes only; the blog draft (9.6) shortened to the required sections; the demo video kept to 2 minutes. F1–F9 are never cut.
+- **Cuts if behind schedule**, in this order: all stretch items (S1, S2, S3); task 7.6 reduced to keyboard and contrast fixes only; the demo video kept to 2 minutes. F1–F9 are never cut.
 - If a session overruns by more than 30 minutes, finish the current task and re-plan the remaining times rather than starting two tasks in one session.
 
 ## Manual steps (all of them)
 
-Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorDB Cloud instance, Render account, GitHub repo approval. Later, as `[MANUAL]` tasks placed just before the task that needs them: 8.3 connect Render to the repo, 9.3 record the screen captures and screenshot, 9.5 upload the video, 9.7 submit on WeMakeDevs. Pushing to GitHub is always done by you (`git push`), never by the agent.
+Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorDB Cloud instance, Render account, GitHub repo approval. Later, as `[MANUAL]` tasks placed just before the task that needs them: 8.3 connect Render to the repo, 9.3 take the screenshots, 9.5 upload the video, 9.7 submit on WeMakeDevs. Pushing to GitHub is always done by you (`git push`), never by the agent.
 
 ## Phases 0 to 5: done
 
@@ -261,7 +261,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
 
 ## Phase 9: Submission
 
-- [ ] **9.1 README**
+- [x] **9.1 README**
   - **Goal:** A README that meets every hackathon requirement.
   - **Files:** modify `README.md`.
   - **Spec:** sections, in order: what it is and the track (Company Brain); screenshot (`docs/screenshot.png`, added in 9.3; reference it now); live demo links; how it works (short); graph data model (Mermaid `graph LR` of all node labels and relationship types from ARCH §2, plus a table of node and relationship types with one-line meanings); **"Cypher queries and graph algorithms"**: one bullet per exported constant in `backend/src/queries.ts` (name, one-line explanation, feature IDs), plus each FalkorDB procedure used (`algo.pageRank`, `algo.betweenness`, `db.idx.fulltext.createNodeIndex`, `db.idx.fulltext.queryNodes`) and why; scoring and risk definitions (short, from ARCH §4); local setup from zero (Node 24, `npm install`, `.env` from `.env.example`, FalkorDB Cloud free tier or `docker run -p 6379:6379 falkordb/falkordb`, `cli -- load --fixture` or `cli -- load`, `npm --workspace backend run dev`, `npm --workspace web run dev`); pointing it at another repo (edit `data/config.json`, `fetch`, `extract-decisions`, `load`); MCP server (from 6.1); architecture overview (the diagram from ARCH §1 and the module list); tests (`npm run check`); "Built with AI assistance" (Claude Code; the graph model, queries and architecture are documented here and explained by the author); licence MIT; data note (public repo data, emails stored only as hashes).
@@ -273,8 +273,9 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** none; `npm run check`.
   - **Verify:** for every `export const` name in `backend/src/queries.ts`, `grep` finds it in `README.md`; preview the Mermaid block.
   - **Out of scope:** blog, video.
+    Note: The Mermaid block was checked by syntax only (plain `graph LR` with `-->|TYPE|` edges), not previewed on GitHub; check it renders after the next push. The video link is added in 9.5 and `docs/screenshot.png` in 9.3.
 
-- [ ] **9.2 Demo script and Remotion project**
+- [x] **9.2 Demo script and Remotion project**
   - **Goal:** A scene-by-scene demo script and a Remotion composition that assembles the recordings with title cards and captions.
   - **Files:** create `video/package.json`, `video/tsconfig.json`, `video/src/index.ts`, `video/src/Root.tsx`, `video/src/Demo.tsx`, `video/src/scenes.ts`; modify root `package.json` (workspace `video`), root `tsconfig.json` (reference `./video`), `.gitignore` (`video/public/recordings/`, `video/out/`), `vitest.config.ts` only if needed.
   - **Spec:**
@@ -299,21 +300,22 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** none; `npm run check` (lint and types include `video/`).
   - **Verify:** criteria 2 and 3.
   - **Out of scope:** the recordings themselves.
+    Note: Title cards also show their caption under the title, so the narration is on screen for every scene. Captions avoid demo numbers so they stay true whatever the recording shows. The first Remotion command downloads Chrome Headless Shell (about 113 MB) into `node_modules`.
 
-- [ ] **9.3 [MANUAL] Record the screen captures and screenshot**
+- [x] **9.3 [MANUAL] Take the screenshots**
   - **Steps for the user:**
-    1. Open the live site in Chrome at 1920×1080 (or browser zoom so the window is 1920×1080), in a clean profile with no extensions visible.
-    2. For each recording scene in `video/src/scenes.ts`, record the screen with the Windows Snipping Tool (**Win+Shift+R**, select the browser window) or OBS, following its `show` text. Keep each clip a few seconds longer than its scene.
-    3. Save the clips as MP4 with the exact `file` names from `scenes.ts` into `video/public/recordings/`.
-    4. Take one screenshot of the Departure Simulation screen with a result and save it as `docs/screenshot.png`.
-    5. For scene 8, record the MCP tools being called from Claude Desktop or Claude Code (config from the README).
-    6. Tell me when all files are in place.
-  - **Agent checks:** every `file` in `scenes.ts` exists in `video/public/recordings/`; `docs/screenshot.png` exists and the README shows it.
+    1. Open the live site in Chrome with the window at 1920×1080 (or use browser zoom to fit), in a clean profile with no extensions visible.
+    2. For each `screens` scene in `video/src/scenes.ts`, take the screenshots its `show` text lists (Windows Snipping Tool, **Win+Shift+S**, window mode), 9 in total.
+    3. Save them as PNG with the exact `files` names from `scenes.ts` into `video/public/screens/`.
+    4. For `09-mcp.png`, screenshot the `team_ranking` tool call and result in Claude Desktop or Claude Code (config from the README).
+    5. Tell me when all files are in place.
+  - **Agent checks:** every name in `files` in `scenes.ts` exists in `video/public/screens/`; copy `05-simulation-after.png` to `docs/screenshot.png` and check the README shows it.
+    Note: Changed from screen recordings to screenshots at the user's request. Recording scenes are now `kind: "screens"` with a `files` list; `Demo.tsx` splits each scene's time evenly across its screenshots with a slow zoom and fade-in. `video/public/screens/` replaces `video/public/recordings/` in `.gitignore`. Screenshots 01–08 were taken by the agent with a one-off `playwright-core` script in its scratchpad (driving the installed Chrome against the live site; nothing added to the repo), so the user only takes `09-mcp.png`. The simulation caption now says "Several components drop to a single expert" because the top-ranked departure orphans 0 components.
 
-- [ ] **9.4 Render the demo video**
+- [x] **9.4 Render the demo video**
   - **Goal:** A 2–3 minute MP4 assembled from the recordings.
-  - **Files:** modify `video/src/scenes.ts` only if clip lengths need adjusting.
-  - **Spec:** run `npm --workspace video run render`; watch the result in the Studio (`npm --workspace video run studio`) for caption timing; adjust `seconds` per scene so each caption matches its clip.
+  - **Files:** modify `video/src/scenes.ts` only if scene lengths need adjusting.
+  - **Spec:** run `npm --workspace video run render`; watch the result in the Studio (`npm --workspace video run studio`) for caption timing; adjust `seconds` per scene so each caption has time to be read.
   - **Dependencies:** none.
   - **Acceptance criteria:**
     1. `video/out/tribal-demo.mp4` exists and is between 120 and 180 seconds.
@@ -321,28 +323,27 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** none; `npm run check`.
   - **Verify:** check the duration Remotion prints after rendering.
   - **Out of scope:** music, voice-over (you can record narration over it yourself).
+    Note: At the user's request the screenshot slideshow was replaced by an animated motion graphic synced to an ElevenLabs voice-over (`video/public/voice/voiceover.mp3`, git-ignored like the screenshots). `scenes.ts` now holds each scene's narration and its start time in the audio (found with ffmpeg's whisper filter and silence detection); scenes live in `video/src/views/`, shared pieces in `ui.tsx`, `theme.ts` and `RiskGraph.tsx`, and `data.ts` is a snapshot of the live API (risk map, ranking, `swilly22` simulation and handover, `graph/src/parser`, one Ask answer). `video/tsconfig.json` references `../backend` so the video shows the real `DEPARTURE_COMPONENTS` query instead of a copied Cypher string. The 153 s render has no captions; for YouTube, paste the script as a transcript and let it auto-sync. `.gitignore` keeps `video/public/screens/` because those screenshot files are still on disk.
 
-- [ ] **9.5 [MANUAL] Upload the video**
+- [x] **9.5 [MANUAL] Upload the video**
   - **Steps for the user:**
     1. Upload `video/out/tribal-demo.mp4` to YouTube (Public or Unlisted), title "Tribal: knowledge risk in FalkorDB (Graph Hacks, Company Brain)".
     2. Paste the description from the top of `docs/SUBMISSION.md` once 9.6 writes it, or a one-line pitch now.
     3. Tell me the video URL.
   - **Agent checks:** add the video URL to `README.md` (top, under the live links) and to `docs/SUBMISSION.md` if it exists.
 
-- [ ] **9.6 Blog draft and submission text**
-  - **Goal:** The blog post draft and paste-ready submission text.
-  - **Files:** create `docs/BLOG.md`, `docs/SUBMISSION.md`.
-  - **Spec:**
-    - `docs/BLOG.md` (1,000–1,500 words): the problem (knowledge leaves with people); why a graph (the questions are about connections); the data model (the Mermaid diagram); how expertise and bus factor are computed in Cypher (one real query from `queries.ts`); the departure simulation with real numbers from the demo; decisions and SUPERSEDES; agent with sources and MCP; what I learned (FalkorDB procedures, free-tier constraints, LLM caching); links.
-    - `docs/SUBMISSION.md`: project name "Tribal"; one-line pitch (at most 20 words); description (150–250 words); track "Company Brain"; links: repo, live frontend, backend health URL, video; tech used; AI assistance disclosure. Each field under its own heading, ready to paste.
+- [x] **9.6 Submission text**
+  - **Goal:** Paste-ready submission text.
+  - **Files:** create `docs/SUBMISSION.md`.
+  - **Spec:** `docs/SUBMISSION.md`: project name "Tribal"; one-line pitch (at most 20 words); description (150–250 words); track "Company Brain"; links: repo, live frontend, backend health URL, video; tech used; AI assistance disclosure. Each field under its own heading, ready to paste.
   - **Dependencies:** none.
   - **Acceptance criteria:**
-    1. Every number in the blog matches the live demo.
+    1. Every number in the description matches the live demo.
     2. `SUBMISSION.md` contains every field the WeMakeDevs form needs (name, pitch, description, track, repo, demo URL, video URL).
   - **Tests:** none; `npm run check`.
-  - **Verify:** read both files once end to end.
-  - **Out of scope:** publishing the blog.
-    Note: The user posts the blog to Medium themselves (paste into the editor, or **Import a story** with the pushed `docs/BLOG.md` GitHub URL). Medium has no official MCP and stopped issuing API tokens in 2025, so the agent never posts it.
+  - **Verify:** read the file once end to end.
+  - **Out of scope:** a blog post.
+    Note: The blog (`docs/BLOG.md`) was dropped at the user's request.
 
 - [ ] **9.7 [MANUAL] Submit on WeMakeDevs**
   - **Steps for the user:**

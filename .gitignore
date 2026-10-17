@@ -11,3 +11,6 @@ Thumbs.db
 desktop.ini
 *playbook*.md
 scripts/auto-feature.sh
+video/public/screens/
+video/public/voice/
+video/out/
