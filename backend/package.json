@@ -14,7 +14,7 @@
     "@modelcontextprotocol/sdk": "1.31.0",
     "falkordb": "6.8.0",
     "hono": "4.13.13",
-    "openai": "7.27.0",
+    "openai": "7.33.0",
     "zod": "4.6.5"
   },
   "devDependencies": {
