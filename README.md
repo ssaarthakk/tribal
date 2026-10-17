@@ -4,6 +4,9 @@ Tribal is an open-source knowledge-risk engine for engineering teams. It reads a
 
 Built for Graph Hacks (WeMakeDevs x FalkorDB), Company Brain track. Work in progress.
 
+- Live app: https://tribal.ssaarthakk.me
+- Backend: https://tribal-backend-gaxe.onrender.com/api/health
+
 ## Install
 
 Requires Node.js 24 (see `.nvmrc`) and Bash (on Windows, run the commands from Git Bash).

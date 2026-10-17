@@ -208,7 +208,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Out of scope:** the Render dashboard (8.3).
     Note: Region left at `singapore`; the FalkorDB Cloud region couldn't be read without opening `.env`, so change it in Render if the instance isn't in Asia. Criterion 2 was verified in a scratchpad copy of the repo because `npm ci` in the repo fails with EPERM while the local Vite dev server holds a rolldown binary.
 
-- [ ] **8.3 [MANUAL] Deploy the backend on Render**
+- [x] **8.3 [MANUAL] Deploy the backend on Render**
   - **Goal:** The backend runs on Render, connected to FalkorDB Cloud.
   - **Steps for the user:**
     1. Run `/commit`, then `git push -u origin main` yourself.
@@ -218,8 +218,9 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
     5. In GitHub: repo **Settings → Secrets and variables → Actions → Variables → New repository variable**: `BACKEND_URL` = `https://<service>.onrender.com` (no trailing slash). Then **Actions → Keep alive → Run workflow** once and check it's green.
     6. Tell me the backend URL.
   - **Agent checks:** `curl -fsS <url>/api/health` and `curl -X POST <url>/api/simulate …` for the top-ranked person; add the URL as a `Note:`.
+    Note: Backend live at `https://tribal-backend-gaxe.onrender.com`. `/api/health` returned `{"ok":true,"nodes":16426}`; `/api/simulate` for the top-ranked person (`swilly22`) returned a report with affected components.
 
-- [ ] **8.4 Deploy the web app to Cloudflare Pages**
+- [x] **8.4 Deploy the web app to Cloudflare Pages**
   - **Goal:** The web app is live on Cloudflare Pages and talks to the Render backend.
   - **Files:** create `scripts/deploy-web.sh`; modify `README.md` (live URLs).
   - **Spec:** `scripts/deploy-web.sh` (executable):
@@ -240,6 +241,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** none; `npm run check`.
   - **Verify:** open the live site with the browser tools; check the four flows in criterion 2 and look at the console for CORS errors.
   - **Out of scope:** custom domains.
+    Note: The Pages project got `tribal-5zi.pages.dev`, so at the user's request the live URL is the custom domain `https://tribal.ssaarthakk.me` and Render's `WEB_ORIGIN` is set to it (the pages.dev URL loads but its API calls are blocked by CORS). The project had to be created with `wrangler pages project create … --force` because wrangler 4.147 otherwise delegates to Workers and fails at a workspace root; deploys work without `--force`. The four flows were checked with `curl` against the backend using the live `Origin` header (CORS allowed; risk map, simulate for `swilly22`, handover `generatedBy: cache`, Ask with 3 sources), not in a browser, because no browser tool was available and the local DNS still cached the new subdomain as missing.
 
 ## Phase 7 (continued): polish after deployment
 
