@@ -1,0 +1,2585 @@
+{
+  "entries": [
+    {
+      "threadKey": "issue-1056",
+      "contentHash": "abb460b3a6b4e7b8",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-1441",
+      "contentHash": "72578984556e6c49",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-1458",
+      "contentHash": "1ab6d211a85faec7",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2030",
+      "contentHash": "cd293c4259f6e255",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2129",
+      "contentHash": "ef93807b53f67dad",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2152",
+      "contentHash": "3f8d90f5c651b31a",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2180",
+      "contentHash": "f6fbb222915df2f6",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2181",
+      "contentHash": "8f32e088a2f628c6",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2214",
+      "contentHash": "730f493fdfecff97",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2223",
+      "contentHash": "1b83e427f280c8cb",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2224",
+      "contentHash": "27d26c8a8366f850",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2225",
+      "contentHash": "54b10f090aa46c99",
+      "decisions": [
+        {
+          "id": "issue-2225-1",
+          "summary": "Keep tofloat(String) as 64-bit in the Rust engine instead of copying C's strtof.",
+          "rationale": "This issue was fixed by the Rust engine, and this decision records it as deliberate to prevent diverging back toward C.",
+          "decidedAt": "2026-10-11T13:00:05.000Z",
+          "madeBy": [
+            "AviAvni"
+          ],
+          "affects": [
+            "src/arithmetic"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "issue-2228",
+      "contentHash": "562b26ada9ab7698",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2266",
+      "contentHash": "d9ab5a39f9b4c0c0",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2269",
+      "contentHash": "23d49a4934fab239",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2288",
+      "contentHash": "0df704a03493702c",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2296",
+      "contentHash": "d753919bfe43adb3",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2310",
+      "contentHash": "96e05b0b56abf864",
+      "decisions": [
+        {
+          "id": "issue-2310-1",
+          "summary": "Mark nested unit CALL {} subqueries not capping cardinality as a critical issue.",
+          "rationale": "Unit subqueries must emit exactly one row per input row, but nested ones leak inner fan-out into the outer row count on the Rust engine.",
+          "decidedAt": "2026-08-26T11:25:40.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "issue-2311",
+      "contentHash": "e330e05e1e7e5170",
+      "decisions": [
+        {
+          "id": "issue-2311-1",
+          "summary": "Mark OPTIONAL MATCH binding an already-bound node path to NULL as a critical regression.",
+          "rationale": "Reusing an already-bound node in an OPTIONAL MATCH path pattern binds the path to NULL or leaves it unbound on the Rust engine instead of a singleton path.",
+          "decidedAt": "2026-08-26T11:25:35.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "issue-2324",
+      "contentHash": "981cb3b1ba38b735",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2376",
+      "contentHash": "411494dbe395b62f",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2388",
+      "contentHash": "5fc7402b8aadfb67",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2424",
+      "contentHash": "0258c9f658eb96b4",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2425",
+      "contentHash": "88f81d3704c001c6",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2432",
+      "contentHash": "5ed0264afa6956f4",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2434",
+      "contentHash": "69af04e78aa670a9",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2436",
+      "contentHash": "bfeb53268f398ec1",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2465",
+      "contentHash": "f0f4c2822437e4d3",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2502",
+      "contentHash": "c1bc016c911b0005",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2536",
+      "contentHash": "794590dc68867c9c",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2564",
+      "contentHash": "4fa4a3bb67301fa6",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2595",
+      "contentHash": "86aa9fa02af922a8",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2596",
+      "contentHash": "38c3194ec90a5024",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2599",
+      "contentHash": "5703ab87046e7ad0",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2602",
+      "contentHash": "6066de0c817562f1",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2603",
+      "contentHash": "9a736114ca975922",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2620",
+      "contentHash": "4e25ffeb4c60a47c",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2621",
+      "contentHash": "71e7eac418f0c6f3",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2648",
+      "contentHash": "d3c94ebaa54ea707",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2688",
+      "contentHash": "656dd3c77bc5102c",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2696",
+      "contentHash": "30f89ae950c224c7",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2698",
+      "contentHash": "e319eb78e2206987",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2703",
+      "contentHash": "73a0b32c90f99d05",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2709",
+      "contentHash": "b18fcbd9040cb92c",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2715",
+      "contentHash": "28cc0a277d245b36",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2716",
+      "contentHash": "4ab9b9266d8bf02b",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2719",
+      "contentHash": "3dd964f386e00b6d",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2733",
+      "contentHash": "8e5b44fa53c2cd02",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2739",
+      "contentHash": "525cc66ec4f857f8",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2745",
+      "contentHash": "e670d143c7db11c6",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2763",
+      "contentHash": "9e4ed17198a9e5d1",
+      "decisions": [
+        {
+          "id": "issue-2763-1",
+          "summary": "Close the issue as a duplicate of another issue.",
+          "rationale": "Duplicate of #2716, which describes the same defect and predates this by several days.",
+          "decidedAt": "2026-09-09T07:13:16.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "issue-2775",
+      "contentHash": "4a98f72842d06bd2",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2798",
+      "contentHash": "633f1ae8fd38ec2b",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2802",
+      "contentHash": "1d21bc8daf6e5e31",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2811",
+      "contentHash": "56008afa78f685fe",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2821",
+      "contentHash": "25434a5805205aae",
+      "decisions": [
+        {
+          "id": "issue-2821-1",
+          "summary": "Bump cargo-fuzz to version 0.13.2 to fix compilation failures on current nightly rustc.",
+          "rationale": "Cargo-fuzz 0.13.1 resolves rustix v0.36.5 which uses reserved rustc compiler attributes rejected by current nightly, whereas 0.13.2 resolves rustix v1.1.4 and builds clean.",
+          "decidedAt": "2026-09-14T07:19:48.000Z",
+          "madeBy": [
+            "AviAvni",
+            "gkorland"
+          ],
+          "affects": [
+            ".github/workflows"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "issue-2825",
+      "contentHash": "dbe4536482565903",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2839",
+      "contentHash": "1b058a3b22b058b9",
+      "decisions": [
+        {
+          "id": "issue-2839-1",
+          "summary": "Make IdSpace own live counts, recycled sets, entry bounds, and taken sets as fields on Graph.",
+          "rationale": "An IdSpace that is passed the state it owns is a validator with extra steps, and the wrappers around Graph's members were moving logic between files rather than giving the ids an owner.",
+          "decidedAt": "2026-09-15T19:38:35.000Z",
+          "madeBy": [
+            "gkorland",
+            "DvirDukhan"
+          ],
+          "affects": [
+            "graph/src/effects",
+            "graph/src/graph",
+            "graph/src/runtime",
+            "src",
+            "src/commands"
+          ],
+          "supersedes": [],
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "threadKey": "issue-2864",
+      "contentHash": "e7d0fb16e54f4db0",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2866",
+      "contentHash": "8d504e700de12da5",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2896",
+      "contentHash": "6bf149288d063ed8",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2929",
+      "contentHash": "a334d853dbe1e472",
+      "decisions": [
+        {
+          "id": "issue-2929-1",
+          "summary": "Agreed to fix string.replaceRegEx to copy replacements literally rather than expanding $-references.",
+          "rationale": "The X is a literal the user wrote, and the expansion silently deletes it. That is a data change on text that never contained a capture group.",
+          "decidedAt": "2026-09-26T10:23:23.000Z",
+          "madeBy": [
+            "aniruddhaadak80"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "threadKey": "issue-2937",
+      "contentHash": "ba34ed59e66a0a7e",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2955",
+      "contentHash": "375e85bd4821f5ee",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2982",
+      "contentHash": "f3355eae4f0823f0",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-2992",
+      "contentHash": "5f2b50025075dc31",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-3028",
+      "contentHash": "0a7a71f96e9123a8",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-3029",
+      "contentHash": "a084d093253c8b3b",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-3036",
+      "contentHash": "96563555c9d5de93",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-3042",
+      "contentHash": "4a688c46f3326cb9",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-3105",
+      "contentHash": "a3bd7ebab7c22a11",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-3135",
+      "contentHash": "4eb456dea8f78b0c",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-3242",
+      "contentHash": "a5ecf1b7dac65a54",
+      "decisions": [
+        {
+          "id": "issue-3242-1",
+          "summary": "Keep exact integer division in Rust and handle the i64::MIN / -1 overflow case explicitly.",
+          "rationale": "Converting integer operands to f64 before division would reproduce current C behavior, but it can lose precision for large integers, produce incorrect quotients, and break the expected relationship between division and modulo.",
+          "decidedAt": "2026-10-13T15:31:02.000Z",
+          "madeBy": [
+            "Darshan3690"
+          ],
+          "affects": [
+            "src/arithmetic"
+          ],
+          "supersedes": [],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "threadKey": "issue-3243",
+      "contentHash": "4194ee18f2cf4489",
+      "decisions": [
+        {
+          "id": "issue-3243-1",
+          "summary": "Follow openCypher equality for UNIQUE constraints rather than reproducing C's Boolean-to-numeric conflation.",
+          "rationale": "After reviewing the reported behavior, I agree with the recommendation to follow openCypher equality rather than reproduce the current C implementation's Boolean-to-numeric conflation.",
+          "decidedAt": "2026-10-13T15:30:05.000Z",
+          "madeBy": [
+            "Darshan3690"
+          ],
+          "affects": [
+            "graph/src/graph",
+            "src"
+          ],
+          "supersedes": [],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "threadKey": "issue-3272",
+      "contentHash": "1f62f9c60d652174",
+      "decisions": [
+        {
+          "id": "issue-3272-1",
+          "summary": "Sort union type members using canonical type order and fix db.idx.fulltext.drop error message to avoid empty parentheses.",
+          "rationale": "I can start with the two formatting fixes: Sort union type members using the canonical type order so the output matches C, and fix the db.idx.fulltext.drop error message to avoid empty parentheses when no attribute is specified.",
+          "decidedAt": "2026-10-13T15:27:48.000Z",
+          "madeBy": [
+            "Darshan3690"
+          ],
+          "affects": [
+            "src/procedures"
+          ],
+          "supersedes": [],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "threadKey": "issue-3293",
+      "contentHash": "c374c483c250bb2b",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-3295",
+      "contentHash": "9a0b199c4c0db8f9",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-3296",
+      "contentHash": "eaf4f7478a13f670",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-3313",
+      "contentHash": "51ddec130a72a63d",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-3352",
+      "contentHash": "2a492b208fb04c72",
+      "decisions": []
+    },
+    {
+      "threadKey": "issue-3368",
+      "contentHash": "c6c5b7bb96fe2e5f",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1059",
+      "contentHash": "034160d35a480341",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1143",
+      "contentHash": "621ce7edde577a93",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1218",
+      "contentHash": "39f2401d72b45601",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1274",
+      "contentHash": "fd304991b6baabd1",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1287",
+      "contentHash": "5535bc89bad1e84c",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1291",
+      "contentHash": "af8967a3cc0651d3",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1343",
+      "contentHash": "454fd7acb24f8f55",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1346",
+      "contentHash": "c0fec33ffa1c83ba",
+      "decisions": [
+        {
+          "id": "pr-1346-1",
+          "summary": "Replaced the deprecated architectures key with the platforms key format in snapcraft.yaml for core24 base.",
+          "rationale": "The 'architectures' key is not supported for base 'core24' and requires using the 'platforms' key instead.",
+          "decidedAt": "2025-11-08T02:45:45.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [
+            "build"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        },
+        {
+          "id": "pr-1346-2",
+          "summary": "Moved snap configuration and files under the build directory.",
+          "rationale": "Requested by maintainer to organize new snap files under the build folder.",
+          "decidedAt": "2025-11-08T03:07:14.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [
+            "build"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        },
+        {
+          "id": "pr-1346-3",
+          "summary": "Replaced snapcore/action-build with direct snapcraft installation using destructive mode.",
+          "rationale": "Directly building in the runner environment avoids container device permission issues like /dev/null and /dev/urandom errors.",
+          "decidedAt": "2025-11-08T20:39:28.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [
+            ".github/workflows",
+            "build"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1363",
+      "contentHash": "cc9aa524e574ae3b",
+      "decisions": [
+        {
+          "id": "pr-1363-1",
+          "summary": "Allocate attributes during node reservation instead of handling null attributes defensively.",
+          "rationale": "Ensuring attributes are always allocated during node reservation (in Graph_ReserveNode and Graph_CreateNode) eliminates the possibility of NULL attributes entirely, making the defensive checks unnecessary.",
+          "decidedAt": "2025-11-09T23:16:15.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1371",
+      "contentHash": "6b08c837251db919",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1374",
+      "contentHash": "c33182067a09daea",
+      "decisions": [
+        {
+          "id": "pr-1374-1",
+          "summary": "Use a function pointer for distance scoring instead of sim_func.",
+          "rationale": "replace sim_func with a function pointer",
+          "decidedAt": "2025-11-11T12:04:09.000Z",
+          "madeBy": [
+            "swilly22"
+          ],
+          "affects": [
+            "src/procedures",
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1422",
+      "contentHash": "e2925d17522659f1",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1460",
+      "contentHash": "40076733c7a928ec",
+      "decisions": [
+        {
+          "id": "pr-1460-1",
+          "summary": "Trim the trailing slash from the path in the custom temporary folder configuration logic.",
+          "rationale": "I followed the same logic as the Config_import_folder_set function, adding only the logic to trim the trailing \"/\"",
+          "decidedAt": "2025-12-29T07:42:17.000Z",
+          "madeBy": [
+            "dudizimber"
+          ],
+          "affects": [
+            "src/configuration"
+          ],
+          "supersedes": [],
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1477",
+      "contentHash": "79d3be7e38ee9dc1",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1479",
+      "contentHash": "9b2feefa80c551b4",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1480",
+      "contentHash": "07d4eb7ebba7eb9e",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1490",
+      "contentHash": "1f655922918703ba",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1493",
+      "contentHash": "5849cf91c5146488",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1494",
+      "contentHash": "1f6d12db97254c39",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1500",
+      "contentHash": "1caf69cf90652ad4",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1503",
+      "contentHash": "eb30b078f198bbeb",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1505",
+      "contentHash": "006a9acee7aa2352",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1515",
+      "contentHash": "7acf4a04228312f5",
+      "decisions": [
+        {
+          "id": "pr-1515-1",
+          "summary": "Always send keyspace notifications to allow other modules to subscribe even if client notifications are disabled.",
+          "rationale": "We would like to notify other module even if the clients didn't enable the notifications.",
+          "decidedAt": "2026-01-04T16:46:38.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        },
+        {
+          "id": "pr-1515-2",
+          "summary": "Notify graph.deleted after the delete operation completes.",
+          "rationale": "Consistent with how graph.modified is sent after the modification completes.",
+          "decidedAt": "2026-01-04T16:46:38.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1519",
+      "contentHash": "7d31172b258a9bf4",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1536",
+      "contentHash": "5efc0f69ebf01df8",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1558",
+      "contentHash": "b6a90194b059a388",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1561",
+      "contentHash": "3a2a91b699d8133e",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1585",
+      "contentHash": "716a465ed1738061",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1613",
+      "contentHash": "61f51c03e64781c4",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1616",
+      "contentHash": "ff51cb175ec32348",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1618",
+      "contentHash": "556369672aa9a73b",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1620",
+      "contentHash": "e7899a8cc41571af",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1643",
+      "contentHash": "096781a7e298518c",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1665",
+      "contentHash": "2cec13a2dd917fe9",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1687",
+      "contentHash": "8210cde6ac09662a",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1694",
+      "contentHash": "c5e89ba30970adce",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1703",
+      "contentHash": "cef1f7293ed3ea77",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1713",
+      "contentHash": "5ae71b8e28aca292",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1718",
+      "contentHash": "e3ed221faa8aed25",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1737",
+      "contentHash": "831ada4b5ac283e6",
+      "decisions": [
+        {
+          "id": "pr-1737-1",
+          "summary": "Gate the destination-name override to the single-key restore path (`key_number == 1`).",
+          "rationale": "Gated destination-name override to key_number == 1 so multi-key virtual key decodes continue using the embedded graph_name.",
+          "decidedAt": "2026-03-24T19:36:57.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1739",
+      "contentHash": "078b42c1f32933fa",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1748",
+      "contentHash": "323fe6115a470b97",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1771",
+      "contentHash": "ca728dd5675a8aec",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1795",
+      "contentHash": "93818bd5e74e4787",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1800",
+      "contentHash": "6f9434c2700ed778",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1809",
+      "contentHash": "c62ead2c3f668b52",
+      "decisions": [
+        {
+          "id": "pr-1809-1",
+          "summary": "Rewrite serializer boundary tests to remove fragile byte-size assumptions and VKEY_MAX_ENTITY_COUNT overrides.",
+          "rationale": "Relying on entity counts to translate into specific byte sizes is too fragile and subject to change under GraphBLAS.",
+          "decidedAt": "2026-04-06T08:39:11.000Z",
+          "madeBy": [
+            "gkorland",
+            "swilly22"
+          ],
+          "affects": [
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1810",
+      "contentHash": "1bab88ca2586fd32",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1812",
+      "contentHash": "ce021b38535be038",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1834",
+      "contentHash": "15e9a108affd2960",
+      "decisions": [
+        {
+          "id": "pr-1834-1",
+          "summary": "Protect writer queries with a graph READ lock during their match phase to prevent concurrency races.",
+          "rationale": "Prevents entity pointers from being invalidated mid-execution by concurrent memory modifications during active defrag or GRAPH.EFFECT.",
+          "decidedAt": "2026-04-09T20:45:36.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [
+            "src",
+            "src/commands",
+            "src/execution_plan"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1843",
+      "contentHash": "f0100884e1e7458e",
+      "decisions": [
+        {
+          "id": "pr-1843-1",
+          "summary": "Abort immediately on corrupted or misaligned RDB buffers during deleted-entity decoding using RedisModule_Log and RedisModule_Assert.",
+          "rationale": "Prevents use-after-free and double-free when buffers are misaligned or counts do not match, replacing silent returns.",
+          "decidedAt": "2026-04-10T08:38:31.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [
+            "src/serializers"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1847",
+      "contentHash": "93231493b5acbcfe",
+      "decisions": [
+        {
+          "id": "pr-1847-1",
+          "summary": "Add custom Reset callbacks for OpMerge and OpMergeCreate operators to properly support CALL subqueries with multiple outer bindings.",
+          "rationale": "Without a reset callback, subsequent outer rows drop output or reuse stale handoff/creation states incorrectly.",
+          "decidedAt": "2026-04-12T10:22:58.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1851",
+      "contentHash": "b9b4195ef8061f6f",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1863",
+      "contentHash": "1bcdc8f883b44e48",
+      "decisions": [
+        {
+          "id": "pr-1863-1",
+          "summary": "Split testConstraintNodes into 7 focused test classes and extract module-level helpers.",
+          "rationale": "Prevents test timeouts and eliminates duplicated populate_graph and create_constraints implementations across node-constraint classes.",
+          "decidedAt": "2026-04-17T10:31:18.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1876",
+      "contentHash": "1ebacda9351c19b5",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1884",
+      "contentHash": "1361ada0de6d07ee",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1898",
+      "contentHash": "f775ca1e4711c922",
+      "decisions": [
+        {
+          "id": "pr-1898-1",
+          "summary": "Implement tomap_projection to return null when map projection is performed on a null entity.",
+          "rationale": "Per openCypher, a map projection on a null entity should evaluate to null rather than producing a map of null values.",
+          "decidedAt": "2026-04-21T08:45:24.000Z",
+          "madeBy": [
+            "swilly22"
+          ],
+          "affects": [
+            "src/arithmetic",
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1901",
+      "contentHash": "808190139d9d496d",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1909",
+      "contentHash": "53cd80cacaf0602b",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1910",
+      "contentHash": "fcc2f6b3f6587949",
+      "decisions": [
+        {
+          "id": "pr-1910-1",
+          "summary": "Return an explicit parameter parsing error and bail out early in ExecutionCtx_FromQuery when parameter parsing fails.",
+          "rationale": "Prevents leaving the query buffer corrupted with embedded null bytes from partial parameter name processing, which caused cryptic Cypher parse errors.",
+          "decidedAt": "2026-04-23T18:35:19.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [
+            "src/ast",
+            "src/commands",
+            "src/errors",
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-1921",
+      "contentHash": "07cab001722b8b27",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1923",
+      "contentHash": "b9013d61abed8226",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1935",
+      "contentHash": "0a2307dd51de514a",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-1978",
+      "contentHash": "2ca112b707587b2a",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2034",
+      "contentHash": "57c7bc6ef52e8a82",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2036",
+      "contentHash": "c578738722d8435c",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2039",
+      "contentHash": "7dfe1662d6d35a89",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2053",
+      "contentHash": "381f233e59dc4f33",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2054",
+      "contentHash": "7fb2b4f9512c9132",
+      "decisions": [
+        {
+          "id": "pr-2054-1",
+          "summary": "Synchronize both jobqueue length and capacity accesses using the existing rwmutex in the thread pool implementation.",
+          "rationale": "Reading len under lock while reading cap unsafely can produce inconsistent fullness decisions under concurrent cap updates, so both must be guarded.",
+          "decidedAt": "2026-05-23T18:58:45.000Z",
+          "madeBy": [
+            "KanteshMurade"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2067",
+      "contentHash": "433d363817d0546f",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2070",
+      "contentHash": "5651bf4d3ecb6bbb",
+      "decisions": [
+        {
+          "id": "pr-2070-1",
+          "summary": "Keep the self-reference check local as src == dest instead of extracting it to a separate helper function.",
+          "rationale": "I don't think you should export this to a function.",
+          "decidedAt": "2026-06-12T18:43:28.000Z",
+          "madeBy": [
+            "GomezGab",
+            "nicolatrozzi"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2092",
+      "contentHash": "46b8555130d9fdcc",
+      "decisions": [
+        {
+          "id": "pr-2092-1",
+          "summary": "Introduce a new function in arr.h to return the array size in bytes without exposing arr_hdr.",
+          "rationale": "introduce a new function to arr.h which will give back the size in bytes of the array, there's no need to use arr_hdr that should remain internal to arr.h as much as possible.",
+          "decidedAt": "2026-06-04T17:09:45.000Z",
+          "madeBy": [
+            "swilly22"
+          ],
+          "affects": [
+            "src/util"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2093",
+      "contentHash": "1d27939c2fe3cf69",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2107",
+      "contentHash": "7dcc66fa19ba4680",
+      "decisions": [
+        {
+          "id": "pr-2107-1",
+          "summary": "Define a new range iterator struct and helper functions in util/range_iter.h/c.",
+          "rationale": "I think a new struct need to be defined within the util folder e.g. util/range_iter.h/c, this struct should replace these new fields.",
+          "decidedAt": "2026-06-07T18:25:36.000Z",
+          "madeBy": [
+            "swilly22"
+          ],
+          "affects": [
+            "src/util"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        },
+        {
+          "id": "pr-2107-2",
+          "summary": "Handle the conversion of the range function into an iterator as part of the unwind operator.",
+          "rationale": "I think we should change the range function to be non reducible and handle the conversion of it into an iterator as part of the unwind op.",
+          "decidedAt": "2026-06-07T18:30:59.000Z",
+          "madeBy": [
+            "swilly22"
+          ],
+          "affects": [
+            "src/execution_plan",
+            "src/util"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        },
+        {
+          "id": "pr-2107-3",
+          "summary": "Use the FalkorDB license header for new files.",
+          "rationale": "for new files, use the FalkorDB license",
+          "decidedAt": "2026-06-08T17:29:50.000Z",
+          "madeBy": [
+            "swilly22"
+          ],
+          "affects": [
+            "src/util"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2145",
+      "contentHash": "31c985373028f77e",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2155",
+      "contentHash": "546b76c3340edad8",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2156",
+      "contentHash": "34e3a9035dfa3cea",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2191",
+      "contentHash": "f7caa4727b8b8b71",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2202",
+      "contentHash": "12729e6b18b29447",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2230",
+      "contentHash": "83628d4f72affb79",
+      "decisions": [
+        {
+          "id": "pr-2230-1",
+          "summary": "Run GraphLoadQueue_Free() after ThreadPool_Destroy() during shutdown to prevent concurrent access races.",
+          "rationale": "GraphLoadQueue_Free() is explicitly not thread-safe with concurrent AcquireOrWait/Drain, so it must run only after worker threads are stopped.",
+          "decidedAt": "2026-07-21T08:39:44.000Z",
+          "madeBy": [
+            "swilly22"
+          ],
+          "affects": [
+            "src"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2242",
+      "contentHash": "fbd3fae59803bf94",
+      "decisions": [
+        {
+          "id": "pr-2242-1",
+          "summary": "Refuse queries with duplicate property keys in inline property maps with a validation error.",
+          "rationale": "Changing semantics for duplicate inlined property keys fixes a server crash by rejecting duplicate inline keys at validation time.",
+          "decidedAt": "2026-07-27T14:30:32.000Z",
+          "madeBy": [
+            "GomezGab",
+            "swilly22"
+          ],
+          "affects": [
+            "src/ast",
+            "src/errors",
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2245",
+      "contentHash": "6e7e96236ff1673a",
+      "decisions": [
+        {
+          "id": "pr-2245-1",
+          "summary": "Require every PR to close an issue via GitHub workflow checking closingIssuesReferences.",
+          "rationale": "Adds a check requiring every PR to close an issue without exemptions, ensuring all changes are tracked to an issue.",
+          "decidedAt": "2026-07-28T10:36:34.000Z",
+          "madeBy": [
+            "DvirDukhan"
+          ],
+          "affects": [
+            ".github/workflows"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2261",
+      "contentHash": "1b0140188d39a574",
+      "decisions": [
+        {
+          "id": "pr-2261-1",
+          "summary": "We are not required to hold the GIL when calling the reply API.",
+          "rationale": "we're not required to hold the GIL when calling the reply API",
+          "decidedAt": "2026-07-31T08:45:35.000Z",
+          "madeBy": [
+            "swilly22"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2270",
+      "contentHash": "050bd209be706f8c",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2278",
+      "contentHash": "240aeb1066b211a9",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2287",
+      "contentHash": "5511a6865c4c003a",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2291",
+      "contentHash": "956662417e9f4d62",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2292",
+      "contentHash": "38dd57b0b3638699",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2304",
+      "contentHash": "44eb91ad5164358f",
+      "decisions": [
+        {
+          "id": "pr-2304-1",
+          "summary": "Pair each regression query with its expected undefined variable in test assertions rather than matching generic strings.",
+          "rationale": "Agreed that checking only for not defined was too loose and could pass on unrelated errors, so each query is now paired with the specific variable the binder must reject.",
+          "decidedAt": "2026-08-06T06:54:55.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2305",
+      "contentHash": "eb07ea857e2ebacf",
+      "decisions": [
+        {
+          "id": "pr-2305-1",
+          "summary": "Wrap the fixed test graph in a try-finally block with g.delete() for cleanup.",
+          "rationale": "This test uses its own graph key rather than the module-level GRAPH_ID, so a retried run would accumulate duplicate data; wrapping in try/finally with g.delete() prevents this.",
+          "decidedAt": "2026-08-06T06:55:16.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2306",
+      "contentHash": "b1219b44f105e1b3",
+      "decisions": [
+        {
+          "id": "pr-2306-1",
+          "summary": "Re-assert positive counts, retained writes, and test mutation isolation after DEBUG RELOAD.",
+          "rationale": "The post-reload block only asserted negatives so dropped nodes would pass, and no mutations were performed afterward; adding positive checks and post-reload writes ensures safety.",
+          "decidedAt": "2026-08-06T06:55:17.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2339",
+      "contentHash": "f3c32e7182be32f5",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2349",
+      "contentHash": "672c4edbae385fed",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2365",
+      "contentHash": "3669913c270a2701",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2377",
+      "contentHash": "359655ff9fff1668",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2378",
+      "contentHash": "c7b18ac852385aee",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2386",
+      "contentHash": "f7309b72375841a7",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2390",
+      "contentHash": "4966957d36dbeec4",
+      "decisions": [
+        {
+          "id": "pr-2390-1",
+          "summary": "Make lowering consuming so inline property map predicates are planned once rather than twice and stripped from patterns.",
+          "rationale": "MATCH (a {p: 1}) was surface syntax lowered to an IR::Filter while also left on the QueryNode/QueryRelationship embedded in the plan, causing duplicate predicates.",
+          "decidedAt": "2026-08-07T20:11:22.000Z",
+          "madeBy": [
+            "AviAvni",
+            "DvirDukhan"
+          ],
+          "affects": [
+            "(root)",
+            "bench/src",
+            "graph/src/planner",
+            "graph/src/runtime",
+            "src",
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 0.95
+        },
+        {
+          "id": "pr-2390-2",
+          "summary": "Remove edge_filter from the IR and use parent_filters_edge to obtain it.",
+          "rationale": "edge_predicate looked redundant and parent_filters_edge provides the necessary derivation.",
+          "decidedAt": "2026-08-23T07:56:44.000Z",
+          "madeBy": [
+            "AviAvni"
+          ],
+          "affects": [
+            "graph/src/planner"
+          ],
+          "supersedes": [],
+          "confidence": 0.99
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2392",
+      "contentHash": "42a5991bb57aecad",
+      "decisions": [
+        {
+          "id": "pr-2392-1",
+          "summary": "Model the parser grammar to allow one unary sign plus an optional second sign on numeric literals.",
+          "rationale": "Neo4j not allowing more than 2 unary operators this can lead to allow too users to provide too long query",
+          "decidedAt": "2026-08-09T12:57:36.000Z",
+          "madeBy": [
+            "olifarhaan"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 0.9
+        },
+        {
+          "id": "pr-2392-2",
+          "summary": "Use pos() and set_pos() to peek and rewind instead of cloning for lookahead.",
+          "rationale": "optional_match_token consumes before we can see the next token, and -9223372036854775808 only fits with its sign attached.",
+          "decidedAt": "2026-08-10T07:49:00.000Z",
+          "madeBy": [
+            "olifarhaan"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2394",
+      "contentHash": "e95f12cb7fb30a76",
+      "decisions": [
+        {
+          "id": "pr-2394-1",
+          "summary": "Catch only ResponseError in regression tests validating rejected Cypher queries.",
+          "rationale": "Catching only ResponseError verifies the expected query error. It does not hide unrelated failures such as assertion errors or connection errors.",
+          "decidedAt": "2026-08-08T15:05:20.000Z",
+          "madeBy": [
+            "olifarhaan"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2397",
+      "contentHash": "9451626898eeb260",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2405",
+      "contentHash": "aff30ebf53d3efb5",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2407",
+      "contentHash": "f1733fd3988cc32d",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2420",
+      "contentHash": "66d48d6cf1669df8",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2423",
+      "contentHash": "120fab9ba3eccd45",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2428",
+      "contentHash": "5e4cc164eeaacb16",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2431",
+      "contentHash": "8a728430340e8a20",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2433",
+      "contentHash": "edfc47c9e6eb6262",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2437",
+      "contentHash": "63a3870e4c703ddb",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2439",
+      "contentHash": "b68dfb00725bcebc",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2442",
+      "contentHash": "34406374a23a4196",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2450",
+      "contentHash": "467acb8857f89a6d",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2454",
+      "contentHash": "dccac49bda8e2610",
+      "decisions": [
+        {
+          "id": "pr-2454-1",
+          "summary": "Align continuation indentation of the final liveness check in test18_path_filter_under_non_decomposable_operator by assigning the query to a local first.",
+          "rationale": "The continuation indentation was inconsistent with the surrounding style, so assigning the query to a local variable first makes it cleaner and matches the style.",
+          "decidedAt": "2026-08-12T10:39:31.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2455",
+      "contentHash": "c5d707182079ef9e",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2456",
+      "contentHash": "3b06668bfda6b1e4",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2459",
+      "contentHash": "88597c566e5f3630",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2460",
+      "contentHash": "d2b8173d52b44ab3",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2461",
+      "contentHash": "d256b5cc7c28f8d2",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2464",
+      "contentHash": "fffdf6d581ce5a0a",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2469",
+      "contentHash": "2044fab4d410e12b",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2479",
+      "contentHash": "781cb0b6925c9d8e",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2480",
+      "contentHash": "2475f9c5c8855ece",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2481",
+      "contentHash": "fad1225fe48513f2",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2482",
+      "contentHash": "e981262fadc53c86",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2491",
+      "contentHash": "953ef205e2139249",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2493",
+      "contentHash": "a0e6e3b17875ed58",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2494",
+      "contentHash": "ea04b5f7163f4377",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2500",
+      "contentHash": "07ac19ce4a5d7ca9",
+      "decisions": [
+        {
+          "id": "pr-2500-1",
+          "summary": "Treat OrApplyMultiplexer as existence-only in traverse fusion to preserve path multiplicity.",
+          "rationale": "Branch rows are discarded under OrApplyMultiplexer so path multiplicity is unobservable there for the same reason it is under SemiApply.",
+          "decidedAt": "2026-08-13T11:31:00.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2521",
+      "contentHash": "335de5c914f9e08a",
+      "decisions": [
+        {
+          "id": "pr-2521-1",
+          "summary": "Copy profiles from stopped service containers rather than workspace bind mounts to capture flow coverage.",
+          "rationale": "Services start before actions/checkout, and checkout removes untracked mount sources under github.workspace.",
+          "decidedAt": "2026-08-16T06:15:47.000Z",
+          "madeBy": [
+            "DvirDukhan",
+            "gkorland"
+          ],
+          "affects": [
+            ".github/workflows"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2523",
+      "contentHash": "186ba392f333e30d",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2525",
+      "contentHash": "56d3cb2ceee9c5e3",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2527",
+      "contentHash": "603eb4bde187d68e",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2533",
+      "contentHash": "644b67996a12e87e",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2554",
+      "contentHash": "e39f49c9a00248b4",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2559",
+      "contentHash": "4e05b595d6e26370",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2562",
+      "contentHash": "a1d2427662b5bc74",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2566",
+      "contentHash": "32482d884f0325e0",
+      "decisions": [
+        {
+          "id": "pr-2566-1",
+          "summary": "Move the edge-storage boundary harness PR into #2433 so it ships alongside the paper.",
+          "rationale": "The harness is an artifact of the paper, not an independent change to main, and is only useful alongside the text that cites it.",
+          "decidedAt": "2026-08-17T18:17:24.000Z",
+          "madeBy": [
+            "AviAvni"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2568",
+      "contentHash": "5ee3ed5add4918db",
+      "decisions": [
+        {
+          "id": "pr-2568-1",
+          "summary": "Move the #2430 reproduction benches into #2433 instead of merging them independently.",
+          "rationale": "The two reproductions are paper artifacts and part of §evalboundary's argument, so they belong with the paper branch #2433.",
+          "decidedAt": "2026-08-17T18:18:45.000Z",
+          "madeBy": [
+            "AviAvni"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2572",
+      "contentHash": "475188ca325b53a9",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2579",
+      "contentHash": "8b429c243e977fab",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2622",
+      "contentHash": "6d99be87cf2a2e21",
+      "decisions": [
+        {
+          "id": "pr-2622-1",
+          "summary": "Git owns the submodule directly and redisearch.sh no longer touches git.",
+          "rationale": "Both of your points landed on the same thing, so I did it properly rather than defending the old shape.",
+          "decidedAt": "2026-08-25T07:33:18.000Z",
+          "madeBy": [
+            "AviAvni"
+          ],
+          "affects": [
+            "build"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2628",
+      "contentHash": "bfc6d19388e5e7ad",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2641",
+      "contentHash": "20d5ebb7be4ea23e",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2642",
+      "contentHash": "d4035926b83d1bbe",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2650",
+      "contentHash": "b0d283acf4961062",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2660",
+      "contentHash": "dff8e03b8903e4bf",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2662",
+      "contentHash": "d9d517f32fea8c72",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2667",
+      "contentHash": "12d27635ddb9e5cf",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2678",
+      "contentHash": "73876367cd346a07",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2685",
+      "contentHash": "9d090ecfb8bb6d52",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2686",
+      "contentHash": "43ce98548e567a16",
+      "decisions": [
+        {
+          "id": "pr-2686-1",
+          "summary": "Merge the two constructors into a single create_lagraph_graph function with a borrowed parameter.",
+          "rationale": "The two bodies were the same fifteen lines twice over, differing in a single branch: whether the failure path frees the matrix.",
+          "decidedAt": "2026-09-02T11:33:02.000Z",
+          "madeBy": [
+            "AviAvni"
+          ],
+          "affects": [
+            "graph/src/runtime"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2690",
+      "contentHash": "c5ca5796c1e87e2c",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2691",
+      "contentHash": "f15e43d45d480837",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2693",
+      "contentHash": "2aefe43ae8f09ded",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2704",
+      "contentHash": "64cb9b946900af1c",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2706",
+      "contentHash": "4027130ad8a93dab",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2707",
+      "contentHash": "d993ade234436d58",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2736",
+      "contentHash": "9538aed39f37bbbd",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2740",
+      "contentHash": "0d3d64e4f1329c24",
+      "decisions": [
+        {
+          "id": "pr-2740-1",
+          "summary": "Use RoaringTreemap::insert_range instead of collecting ranges into a temporary set for NodeIdSpace range insertions.",
+          "rationale": "insert_range avoids per-id insertion plus the extra allocation, drastically speeding up processing (e.g. from 7.87s down to 432us for large ranges).",
+          "decidedAt": "2026-09-07T06:05:29.000Z",
+          "madeBy": [
+            "DvirDukhan"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        },
+        {
+          "id": "pr-2740-2",
+          "summary": "Refuse u64::MAX bound overflows in NodeIdSpace with a checked add returning an ApplyError::NodeIdOutOfRange.",
+          "rationale": "A wrapped bound is worse than a panic here: at 0 every later check reads as free, so the rest of the buffer would be waved through incorrectly.",
+          "decidedAt": "2026-09-07T06:05:40.000Z",
+          "madeBy": [
+            "DvirDukhan"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2747",
+      "contentHash": "5f66d97955ce4864",
+      "decisions": [
+        {
+          "id": "pr-2747-1",
+          "summary": "Introduce a dedicated limit_zero construction flag in LimitOp to handle LIMIT 0 by returning an empty batch without consuming extra child batches.",
+          "rationale": "Branching purely on remaining == 0 also catches exhausted positive limits, which can cause positive limits to pull an extra child batch. A dedicated flag ensures zero-limit behaves correctly without unintended extra pulls.",
+          "decidedAt": "2026-09-07T14:49:29.000Z",
+          "madeBy": [
+            "aniruddhaadak80"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2754",
+      "contentHash": "9c8a65ec13ddf809",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2757",
+      "contentHash": "de94cbd5b174f7e5",
+      "decisions": [
+        {
+          "id": "pr-2757-1",
+          "summary": "Make record_cap a required constructor argument for BatchedResultEmitter.",
+          "rationale": "Construct-then-apply made no cap the silent default where five ops remembered to pass the budget, whereas making it an argument becomes a compile error.",
+          "decidedAt": "2026-09-10T10:35:02.000Z",
+          "madeBy": [
+            "AviAvni"
+          ],
+          "affects": [
+            "graph/src/runtime"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2762",
+      "contentHash": "f87d261d5b10257e",
+      "decisions": [
+        {
+          "id": "pr-2762-1",
+          "summary": "Close the PR as a duplicate of an existing earlier pull request.",
+          "rationale": "I found this independently by profiling and did not check for existing work on the same operator first — that was my mistake, and #2693 should be the one that lands.",
+          "decidedAt": "2026-09-09T07:12:59.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2764",
+      "contentHash": "2c592688da61ebdd",
+      "decisions": [
+        {
+          "id": "pr-2764-1",
+          "summary": "Close the PR and reject inferring an unlabelled point lookup index scan from graph contents.",
+          "rationale": "FalkorDB's indexes are label-scoped by design, and a query that wants an index should name the label. Inferring one from the data made the plan depend on graph contents rather than the schema.",
+          "decidedAt": "2026-09-09T07:35:34.000Z",
+          "madeBy": [
+            "AviAvni"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2784",
+      "contentHash": "ada050b8405735a3",
+      "decisions": [
+        {
+          "id": "pr-2784-1",
+          "summary": "Switch from DegreeIndex::created_endpoints to CreatedRel struct carrying type name, from, and to fields.",
+          "rationale": "Widening the map alone made things worse and caused a larger RSS footprint, necessitating a direct storage struct rather than separate endpoint maps.",
+          "decidedAt": "2026-09-10T14:46:05.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2785",
+      "contentHash": "e04e6b64babddc8c",
+      "decisions": [
+        {
+          "id": "pr-2785-1",
+          "summary": "Batch GrB matrix operations by collecting dead and checked pairs into shared coordinate vectors using Matrix::build.",
+          "rationale": "Per-pair FFI calls can be very costly for mass detach deletes, so Matrix::build should be used as a single bulk FFI call.",
+          "decidedAt": "2026-09-10T10:30:54.000Z",
+          "madeBy": [
+            "gkorland"
+          ],
+          "affects": [
+            "graph/src/graph"
+          ],
+          "supersedes": [],
+          "confidence": 0.98
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-2786",
+      "contentHash": "bacfb2979e274afe",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2787",
+      "contentHash": "83f3200e528213cf",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2797",
+      "contentHash": "12fd029731b6d738",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2804",
+      "contentHash": "43e5a4dcf5c00536",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2805",
+      "contentHash": "cd9e66089ffab400",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2806",
+      "contentHash": "a973f35a59fa7b6f",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2807",
+      "contentHash": "8f3d9df0feb5dae0",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2809",
+      "contentHash": "b3ab217e40c89eb3",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2824",
+      "contentHash": "a8f6d3067ae61a67",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2833",
+      "contentHash": "db327650c2621816",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2840",
+      "contentHash": "9b0eaa6529d07277",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2846",
+      "contentHash": "cd8479e6f58b1474",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2867",
+      "contentHash": "da644d1d566aa076",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2874",
+      "contentHash": "a7099b19fccc22fc",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2882",
+      "contentHash": "78cde9fd84c45b85",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-2996",
+      "contentHash": "df7521a661621757",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3014",
+      "contentHash": "352145f091b52fbb",
+      "decisions": [
+        {
+          "id": "pr-3014-1",
+          "summary": "Admission uses one global counter in place of pending_count to bound every queued query including writes.",
+          "rationale": "Workers remove a job from that queue before adding its WriteMessage, so a slow graph can accumulate an unbounded per-graph backlog while new commands continue to pass admission; the new channel can therefore grow memory and blocked-client state without the configured pending-query cap applying.",
+          "decidedAt": "2026-10-12T08:39:54.000Z",
+          "madeBy": [
+            "AviAvni"
+          ],
+          "affects": [
+            "graph/src/runtime",
+            "src",
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        },
+        {
+          "id": "pr-3014-2",
+          "summary": "Throttling incoming queries with an error once max pending queries is reached instead of increasing the queue to unbounded size.",
+          "rationale": "At or over MAX_QUEUED_QUERIES, the incoming query is rejected immediately with C's exact error, Max pending queries.",
+          "decidedAt": "2026-10-12T08:39:55.000Z",
+          "madeBy": [
+            "AviAvni",
+            "DvirDukhan"
+          ],
+          "affects": [
+            "src",
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-3016",
+      "contentHash": "59821ea3792e21bf",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3019",
+      "contentHash": "95691627990cbb6b",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3034",
+      "contentHash": "5da88f0c7d87e742",
+      "decisions": [
+        {
+          "id": "pr-3034-1",
+          "summary": "Make the hash join follow equals semantics and match C behavior by aligning Int and Float comparisons.",
+          "rationale": "A rewrite must not change the result, so the join follows equals and matches C.",
+          "decidedAt": "2026-09-25T04:41:50.000Z",
+          "madeBy": [
+            "AviAvni"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-3053",
+      "contentHash": "3f8dd980bb5dfaa9",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3060",
+      "contentHash": "f10147b1750e66c6",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3066",
+      "contentHash": "3304c3c097ff7af6",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3067",
+      "contentHash": "dade03fb10db4458",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3074",
+      "contentHash": "5c329c30418bf9f7",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3080",
+      "contentHash": "ea84f595ec0e73f0",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3088",
+      "contentHash": "de95debec54729e7",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3090",
+      "contentHash": "87d7f72a9f56a845",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3100",
+      "contentHash": "fc1e030b8df180c0",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3104",
+      "contentHash": "18c0ef87c43ed7de",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3118",
+      "contentHash": "b3719bf42ae1bcb5",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3119",
+      "contentHash": "6f1874ff35624da1",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3120",
+      "contentHash": "9058ed22398d7481",
+      "decisions": [
+        {
+          "id": "pr-3120-1",
+          "summary": "Dedupe relTypes in algo.SPpaths/SSpaths config at the parse boundary",
+          "rationale": "relTypes is a set everywhere else it is read, and duplicating relation types causes duplicated paths and redundant edge scanning.",
+          "decidedAt": "2026-09-26T09:17:26.000Z",
+          "madeBy": [
+            "aniruddhaadak80",
+            "gkorland"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-3122",
+      "contentHash": "c6e73d14c88c19e9",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3123",
+      "contentHash": "9d716d2ccfc0b12e",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3125",
+      "contentHash": "3e5ddb349d4e7cbf",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3141",
+      "contentHash": "283cb36d2684c21f",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3144",
+      "contentHash": "586fece395d373ad",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3172",
+      "contentHash": "b91416f7c699be5f",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3181",
+      "contentHash": "cc7e564675841d97",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3184",
+      "contentHash": "bad2d0ab223c67c8",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3192",
+      "contentHash": "31569754fa761525",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3303",
+      "contentHash": "bc8b0514e056cdd0",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3310",
+      "contentHash": "f6699d08c88eb5a0",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3312",
+      "contentHash": "4716b3b2bdb117a5",
+      "decisions": [
+        {
+          "id": "pr-3312-1",
+          "summary": "Set COMPARED_NAN in SIValue_Compare when any of the four coordinates is NaN.",
+          "rationale": "AR_TOPOINT only rejects out-of-range values, and NaN passes every range comparison, so a NaN coordinate reached the comparison and the point compared equal to itself.",
+          "decidedAt": "2026-10-12T22:23:08.000Z",
+          "madeBy": [
+            "smartmem-dev"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        },
+        {
+          "id": "pr-3312-2",
+          "summary": "Avoid qsort when map keys are already in order by using _sort_pairs.",
+          "rationale": "Re-sorting a sorted array leaves the same bytes, so skipping qsort when keys are already in order avoids unnecessary mutation side-effects and costs.",
+          "decidedAt": "2026-10-12T22:23:16.000Z",
+          "madeBy": [
+            "smartmem-dev"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-3314",
+      "contentHash": "e9f53b49d06684b8",
+      "decisions": [
+        {
+          "id": "pr-3314-1",
+          "summary": "Fail the artifact build when ldd -r reports a missing dependency or undefined symbol.",
+          "rationale": "The check now fails on not found as well. undefined symbol already caught a missing library whose symbols the module uses; a NEEDED library it takes no symbols from printed only => not found and passed, though dlopen still refuses the module.",
+          "decidedAt": "2026-10-14T06:15:38.000Z",
+          "madeBy": [
+            "DvirDukhan"
+          ],
+          "affects": [
+            "build/runtime"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        },
+        {
+          "id": "pr-3314-2",
+          "summary": "Keep image independent of the artifacts job so images can be built without holding up the .so build.",
+          "rationale": "Keeping image independent of the artifacts, as on main, where image and artifacts both need only [guard, create-release]. The Release exists before either job runs, so this gate would not prevent a partial release; it would hold the images on the .so build.",
+          "decidedAt": "2026-10-14T06:15:40.000Z",
+          "madeBy": [
+            "DvirDukhan"
+          ],
+          "affects": [],
+          "supersedes": [],
+          "confidence": 0.9
+        },
+        {
+          "id": "pr-3314-3",
+          "summary": "Include Cargo manifests, Cargo.lock, build scripts, and .cargo/config.toml to trigger artifact builds on relevant changes.",
+          "rationale": "The Cargo manifests, Cargo.lock, the build scripts and .cargo/config.toml now trigger the build, since that is how native code (zstd-sys, rquickjs-sys) and link flags reach the per-OS cells.",
+          "decidedAt": "2026-10-14T06:15:41.000Z",
+          "madeBy": [
+            "DvirDukhan"
+          ],
+          "affects": [
+            ".github/workflows"
+          ],
+          "supersedes": [],
+          "confidence": 0.9
+        },
+        {
+          "id": "pr-3314-4",
+          "summary": "Read the release list immediately before push in the retag step instead of using an earlier job's decision.",
+          "rationale": "the retag step reads the release list itself, immediately before the push, instead of acting on a decision create-release made a job earlier. main had the same gap, between release-image.yml's prepare and retag jobs.",
+          "decidedAt": "2026-10-14T06:15:43.000Z",
+          "madeBy": [
+            "DvirDukhan"
+          ],
+          "affects": [
+            ".github/workflows"
+          ],
+          "supersedes": [],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-3321",
+      "contentHash": "0eca4726c5ad67d4",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3323",
+      "contentHash": "6e9ef4fa39a26cb2",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3327",
+      "contentHash": "30cd63a9b274a7c6",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3329",
+      "contentHash": "feb19e99648a787d",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-3334",
+      "contentHash": "3be1c8e337c69c41",
+      "decisions": [
+        {
+          "id": "pr-3334-1",
+          "summary": "Check unique constraints using the supporting index instead of a full label scan per entity.",
+          "rationale": "Pending::check_node_constraint / check_edge_constraint rebuilt a hash of every key in the label once per written entity, so a commit cost O(written x label size).",
+          "decidedAt": "2026-10-14T08:19:31.000Z",
+          "madeBy": [
+            "AviAvni",
+            "DvirDukhan"
+          ],
+          "affects": [
+            "graph/src/runtime",
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        },
+        {
+          "id": "pr-3334-2",
+          "summary": "Make unique check function generic over node and relationship ID types.",
+          "rationale": "unique_violated is now generic over the id type (Id: Copy + Into<u64>): the node check passes NodeId, the edge check RelationshipId.",
+          "decidedAt": "2026-10-15T08:25:54.000Z",
+          "madeBy": [
+            "AviAvni",
+            "DvirDukhan"
+          ],
+          "affects": [
+            "graph/src/runtime",
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        },
+        {
+          "id": "pr-3334-3",
+          "summary": "Allow NUL-containing strings to use the indexed lookup path for uniqueness enforcement.",
+          "rationale": "Strings with NUL matched correctly through node by index scan, and _ is escaped so they don't collide.",
+          "decidedAt": "2026-10-15T08:26:01.000Z",
+          "madeBy": [
+            "AviAvni",
+            "DvirDukhan"
+          ],
+          "affects": [
+            "graph/src/runtime",
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-3335",
+      "contentHash": "5a1df2b02a53cfec",
+      "decisions": [
+        {
+          "id": "pr-3335-1",
+          "summary": "Drop Paren wrappers in the binder so parenthesized WHERE clauses utilize index and ID lookups.",
+          "rationale": "The optimizer passes match on the filter root and on the children of a top-level And, so a Paren hid the predicate from all of them.",
+          "decidedAt": "2026-10-14T08:41:05.000Z",
+          "madeBy": [
+            "AviAvni",
+            "DvirDukhan"
+          ],
+          "affects": [
+            "graph/src/parser",
+            "graph/src/planner",
+            "graph/src/runtime",
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        },
+        {
+          "id": "pr-3335-2",
+          "summary": "Share AND and OR expression flattening in a single helper in parser/ast.rs.",
+          "rationale": "The same AND-from-a-list construction showed up 12 times after binding, so flattening now lives in one shared helper.",
+          "decidedAt": "2026-10-15T07:28:37.000Z",
+          "madeBy": [
+            "AviAvni",
+            "DvirDukhan"
+          ],
+          "affects": [
+            "graph/src/parser",
+            "graph/src/planner",
+            "graph/src/runtime",
+            "tests/flow"
+          ],
+          "supersedes": [],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "threadKey": "pr-3342",
+      "contentHash": "da033052ea0a78f5",
+      "decisions": []
+    },
+    {
+      "threadKey": "pr-864",
+      "contentHash": "00930d611b198d1d",
+      "decisions": []
+    }
+  ]
+}

@@ -298,7 +298,7 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
 
 ## Phase 4: Decisions (F5)
 
-- [ ] **4.1 LLM module**
+- [x] **4.1 LLM module**
   - **Goal:** One module for all LLM calls, with structured output, tool calling, retries and a replaceable `fetch`.
   - **Files:** create `backend/src/llm.ts`, `backend/src/llm.test.ts`; modify `backend/package.json`.
   - **Spec:** exactly ARCH §8 `llm.ts`. Before writing code, check the current `openai` 7.27.0 API for `chat.completions.create`, `response_format` with `json_schema`, and its `RateLimitError` class, and Gemini's OpenAI-compatibility page for anything unsupported (record in a `Note:`).
@@ -311,8 +311,9 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Tests:** `llm.test.ts` with `options.fetch` returning canned `Response`s (OpenAI chat completion JSON) and `maxRetries: 0`: (a) null without key; (b) `json` with content `{"n":1}` and schema `z.object({ n: z.number() })` → `{ n: 1 }`; and the request body sent to fetch contains `"type":"json_schema"`; (c) content `not json` rejects with a message containing the schema name; (d) a response with one tool call `{ id: "t1", function: { name: "bus_factor", arguments: "{}" } }` → `toolCalls` `[{ id: "t1", name: "bus_factor", arguments: "{}" }]`; (e) status 429 → `RateLimitError`; (f) `toJsonSchema` output has no `$schema` key.
   - **Verify:** throwaway scratchpad script: one live `json` call with a tiny schema using `.env`; it must succeed with `gemini-3.5-flash-lite`. If the endpoint rejects the JSON schema, adjust `toJsonSchema` and note what was removed.
   - **Out of scope:** prompts, decision logic.
+    Note: Gemini's OpenAI-compatibility page lists no unsupported parameters for `response_format` `json_schema` or `tools`/`tool_choice`; a live `json` call (zod object with string, number and string array) and a live `chat` tool call both succeeded with `gemini-3.5-flash-lite`, so `toJsonSchema` removes only `$schema`.
 
-- [ ] **4.2 Decision extraction**
+- [x] **4.2 Decision extraction**
   - **Goal:** Pick likely decision threads, extract decisions with the LLM in batches, validate them, and cache them by content hash; add `extract-decisions`.
   - **Files:** create `backend/src/decisions.ts`, `backend/src/decisions.test.ts`; modify `backend/src/cli.ts`.
   - **Spec:**
@@ -341,7 +342,7 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Verify:** `npm run check`. (The live run is 4.3.)
   - **Out of scope:** loading (already done by `load.ts`).
 
-- [ ] **4.3 Extract decisions for the demo repo**
+- [x] **4.3 Extract decisions for the demo repo**
   - **Goal:** Produce `data/decisions.json` for the demo, load it and check its quality.
   - **Files:** create `data/decisions.json` (generated).
   - **Spec:** run `npm --workspace backend run cli -- extract-decisions` (live LLM, about 60 requests; run in the background). Then `cli -- load`. Read 10 decisions and their source threads (via FalkorDB's MCP server and the source URLs) and judge them.
@@ -354,6 +355,7 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Tests:** none new. `npm run check` passes.
   - **Verify:** with the MCP server: `MATCH (d:Decision)-[:AFFECTS]->(c:Component) RETURN c.path, count(d) ORDER BY count(d) DESC LIMIT 10`.
   - **Out of scope:** prompt changes beyond fixing a clear failure (note any change).
+    Note: 300 candidate threads all cached (58 with decisions); 74 decisions loaded (77 `AFFECTS`, 88 `MADE`), 0 superseding and 0 `SUPERSEDES` edges (the model never linked an earlier decision; not faked). 60 requests (one per batch of 5), 6.4 minutes, no prompt changes. Spot-check of 10 evenly spaced decisions: 8 real (issue-2225-1, issue-3242-1, pr-1374-1, pr-1843-1, pr-2092-1, pr-2392-2, pr-2622-1, pr-2764-1); pr-2261-1 is a factual reply to a bot suggestion and pr-3312-1 is a bug fix. The FalkorDB MCP server failed to connect this session, so the verify query ran read-only through `db.read` in a scratchpad script: top components `tests/flow` 17, `graph/src/runtime` 10, `src` 7, `.github/workflows` 6.
 
 ## Phase 5: Agent and handover plan (F6, F7)
 
