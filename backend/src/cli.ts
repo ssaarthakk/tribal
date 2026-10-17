@@ -1,6 +1,7 @@
 import {
   DATA_FILES,
   DecisionCacheSchema,
+  HandoverCacheSchema,
   RepoConfigSchema,
   SnapshotSchema,
   readJsonFile,
@@ -9,11 +10,13 @@ import {
 } from "./datafiles.js";
 import { openDb } from "./db.js";
 import { extractDecisions } from "./decisions.js";
+import { getHandover } from "./handover.js";
 import { loadEnv } from "./env.js";
 import { createRepoSource } from "./github.js";
 import { buildSnapshot } from "./ingest.js";
 import { createLlm } from "./llm.js";
 import { countByLabel, countByRelationship, loadSnapshot } from "./load.js";
+import { getTeamRanking, simulateDeparture } from "./risk.js";
 import { startServer } from "./server.js";
 
 const USAGE = `Usage: npm --workspace backend run cli -- <command>
@@ -22,7 +25,8 @@ Commands:
   serve            Start the API server
   fetch            Fetch the repo from GitHub into the snapshot file
   load [--fixture] Rebuild the graph from the data files
-  extract-decisions  Extract decisions from PR and issue threads with the LLM`;
+  extract-decisions  Extract decisions from PR and issue threads with the LLM
+  handovers        Cache handover plans for the top 5 people with the LLM`;
 
 async function fetchCommand(): Promise<void> {
   const config = await readJsonFile(DATA_FILES.config, RepoConfigSchema);
@@ -86,6 +90,37 @@ async function extractDecisionsCommand(): Promise<void> {
   );
 }
 
+async function handoversCommand(): Promise<void> {
+  const env = loadEnv();
+  const llm = createLlm(env);
+  if (llm === null) {
+    console.error("Set LLM_API_KEY in .env");
+    process.exit(1);
+  }
+  let cache = await readJsonFileOr(DATA_FILES.handovers, HandoverCacheSchema, {
+    entries: [],
+  });
+  const db = await openDb(env, env.FALKORDB_GRAPH);
+  try {
+    for (const { person } of (await getTeamRanking(db)).slice(0, 5)) {
+      const report = await simulateDeparture(db, person.id);
+      if (report === null) continue;
+      const { generatedBy } = await getHandover({
+        report,
+        llm,
+        cache,
+        saveCache: async (updated) => {
+          cache = updated;
+          await writeJsonFile(DATA_FILES.handovers, updated);
+        },
+      });
+      console.log(`${person.id}: ${generatedBy}`);
+    }
+  } finally {
+    await db.close();
+  }
+}
+
 switch (process.argv[2]) {
   case "serve":
     await startServer(loadEnv());
@@ -98,6 +133,9 @@ switch (process.argv[2]) {
     break;
   case "extract-decisions":
     await extractDecisionsCommand();
+    break;
+  case "handovers":
+    await handoversCommand();
     break;
   default:
     console.error(USAGE);

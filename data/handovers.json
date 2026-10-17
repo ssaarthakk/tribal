@@ -1,0 +1,77 @@
+{
+  "entries": [
+    {
+      "personId": "swilly22",
+      "reportHash": "2cccace3969d214c",
+      "summary": "Roi Lipman is an expert on 20 components. After they leave, 0 would have no expert and 10 would have one. 8 decisions would lose their only owner and 40 open items need a new owner.",
+      "pairingReasons": [
+        "Gabriel Gomez has the highest remaining expertise on src/algorithms.",
+        "Gabriel Gomez has the highest remaining expertise on src/arithmetic.",
+        "Gabriel Gomez has the highest remaining expertise on src/ast.",
+        "Dudi has the highest remaining expertise on src/configuration.",
+        "Dvir Dukhan has the highest remaining expertise on src/effects.",
+        "Gabriel Gomez has the highest remaining expertise on src/execution_plan.",
+        "Gabriel Gomez has the highest remaining expertise on src/procedures.",
+        "Dvir Dukhan has the highest remaining expertise on src/resultset.",
+        "Gabriel Gomez has the highest remaining expertise on src/udf.",
+        "Gabriel Gomez has the highest remaining expertise on src/util."
+      ]
+    },
+    {
+      "personId": "AviAvni",
+      "reportHash": "400303b55a287ce6",
+      "summary": "Avi Avni is an expert on 17 component paths. After their departure, 1 component will have no expert and 8 will have one. Additionally, 10 decisions will lose their only owner and 222 open items will need a new owner.",
+      "pairingReasons": [
+        "Dvir Dukhan has the highest remaining expertise on graph/src/parser.",
+        "Dvir Dukhan has the highest remaining expertise on bench/src.",
+        "Dvir Dukhan has the highest remaining expertise on graph.",
+        "Dvir Dukhan has the highest remaining expertise on graph/src/effects.",
+        "Dvir Dukhan has the highest remaining expertise on graph/src/graph.",
+        "Dvir Dukhan has the highest remaining expertise on graph/src/index.",
+        "Dvir Dukhan has the highest remaining expertise on graph/src/planner.",
+        "Dvir Dukhan has the highest remaining expertise on graph/src/runtime.",
+        "Dvir Dukhan has the highest remaining expertise on tests."
+      ]
+    },
+    {
+      "personId": "GomezGab",
+      "reportHash": "340c33e7e22ecab4",
+      "summary": "Gabriel Gomez is an expert on 13 components. After they leave, 0 would have no expert and 7 would have one. Furthermore, 57 open items need a new owner.",
+      "pairingReasons": [
+        "Roi Lipman has the highest remaining expertise on src/algorithms.",
+        "Roi Lipman has the highest remaining expertise on src/arithmetic.",
+        "Roi Lipman has the highest remaining expertise on src/ast.",
+        "Roi Lipman has the highest remaining expertise on src/execution_plan.",
+        "Roi Lipman has the highest remaining expertise on src/procedures.",
+        "Roi Lipman has the highest remaining expertise on src/udf.",
+        "Roi Lipman has the highest remaining expertise on src/util."
+      ]
+    },
+    {
+      "personId": "gkorland",
+      "reportHash": "fa20eb1b4f2efdc4",
+      "summary": "Guy Korland is an expert on 11 components. Following their departure, 23 decisions will lose their only owner and 281 open items will require new ownership. Appropriate team members have been identified for handover.",
+      "pairingReasons": [
+        "Dvir Dukhan has the highest remaining expertise on .github."
+      ]
+    },
+    {
+      "personId": "DvirDukhan",
+      "reportHash": "2ef69c47bed872d3",
+      "summary": "Dvir Dukhan is an expert on 25 components. After their departure, 0 components will have no expert and 11 will have a single expert remaining. Furthermore, 7 decisions will lose their only owner and 63 open items need a new owner.",
+      "pairingReasons": [
+        "Guy Korland has the highest remaining expertise on .github.",
+        "Avi Avni has the highest remaining expertise on bench/src.",
+        "Avi Avni has the highest remaining expertise on graph.",
+        "Avi Avni has the highest remaining expertise on graph/src/effects.",
+        "Avi Avni has the highest remaining expertise on graph/src/graph.",
+        "Avi Avni has the highest remaining expertise on graph/src/index.",
+        "Avi Avni has the highest remaining expertise on graph/src/planner.",
+        "Avi Avni has the highest remaining expertise on graph/src/runtime.",
+        "Roi Lipman has the highest remaining expertise on src/effects.",
+        "Roi Lipman has the highest remaining expertise on src/resultset.",
+        "Avi Avni has the highest remaining expertise on tests."
+      ]
+    }
+  ]
+}

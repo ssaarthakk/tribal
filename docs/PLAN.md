@@ -359,7 +359,7 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
 
 ## Phase 5: Agent and handover plan (F6, F7)
 
-- [ ] **5.1 Shared tools**
+- [x] **5.1 Shared tools**
   - **Goal:** The eight graph tools, defined once for the agent and the MCP server, each returning data, sources and a graph path.
   - **Files:** create `backend/src/tools.ts`, `backend/src/tools.test.ts`; modify `backend/src/schemas.ts`.
   - **Spec:**
@@ -393,8 +393,9 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Tests:** `tools.test.ts`: (a) names in order; (b) `simulate_departure` for alice: sources include the URLs of PR 8, issue 12 and PR 3 (decision `pr-3-1`); path contains `person:alice`, `component:src/db` and a link `person:alice` → `component:src/db` of type `KNOWS_ABOUT`; (c) every tool's result passes `GraphPathSchema` for valid fixture input (`search` "pagination", `who_knows` "pagination", `get_component` "src/api", `get_person` "alice", `decision_history` "src/api"); (d) `get_component` with `{ path: "nope" }` → `not_found`; (e) `simulate_departure` with `{}` throws.
   - **Verify:** `npm run check`.
   - **Out of scope:** the agent loop, MCP.
+    Note: `defineTool`'s `run` follows the spec literally (not `async`), so invalid arguments throw a `ZodError` synchronously from `run` rather than returning a rejected promise; callers should wrap the call itself in `try`. `decision_history` uses `getComponent` to detect unknown components and reuses its `decisions`.
 
-- [ ] **5.2 Chat agent and `POST /api/ask`**
+- [x] **5.2 Chat agent and `POST /api/ask`**
   - **Goal:** A tool-calling agent that answers only from tool results and returns sources and the graph path.
   - **Files:** create `backend/src/agent.ts`, `backend/src/agent.test.ts`; modify `backend/src/schemas.ts`, `backend/src/app.ts`, `backend/src/app.test.ts`, `backend/src/server.ts`.
   - **Spec:**
@@ -413,8 +414,10 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Tests:** `agent.test.ts` (fixture graph, fake `Llm`): criteria 1–3 (for 3: a fake that always returns a tool call → exactly 5 `chat` calls, the last with `[]` tools). `app.test.ts`: `/api/ask` with `llm: null` → 503; with a fake that throws `RateLimitError` → 429; `{ question: "" }` → 400.
   - **Verify:** with the backend running on the demo graph and a real key: `curl -X POST localhost:3000/api/ask -H 'content-type: application/json' -d '{"question":"Who knows the query planner best?","history":[]}'` returns an answer with sources. Record the answer quality in a `Note:`.
   - **Out of scope:** UI.
+    Note: Gemini 3 rejects a follow-up turn with tool calls unless each call's `extra_content.google.thought_signature` is sent back, so `LlmToolCall` gained an optional `thoughtSignature` that `llm.ts` reads (zod) and echoes on assistant tool calls (user-approved deviation from ARCH §8; new `llm.test.ts` case). `toolCalls` lists every requested name, including unknown ones.
+    Note: Live verify (port 3001, as 3000 was taken by another process): "Who knows the query planner best?" took all 4 steps (`who_knows`, `search`, `who_knows`, `search`) and answered AviAvni, DvirDukhan, Roi Lipman and Guy Korland, with 12 sources and a 36-node path. The names are plausible, but the sources are loosely related search hits (e.g. quickjs config, Cypher comments PRs).
 
-- [ ] **5.3 Handover plan**
+- [x] **5.3 Handover plan**
   - **Goal:** Turn a departure report into a handover plan (deterministic structure, optional LLM narrative, cached), rendered as markdown and GitHub issue text, plus `POST /api/handover` and the `handovers` command.
   - **Files:** create `backend/src/handover.ts`, `backend/src/handover.test.ts`, `data/handovers.json` (generated); modify `backend/src/schemas.ts`, `backend/src/app.ts`, `backend/src/app.test.ts`, `backend/src/cli.ts`.
   - **Spec:**
@@ -478,6 +481,7 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Tests:** `handover.test.ts` (fixture report for alice from `simulateDeparture`, fake `Llm`): (a) criterion 1; (b) `renderHandoverMarkdown` equals the full expected string for alice (written out in the test); (c) the issue body's first line is `<summary>` and contains `- [ ] \`src/db\``; (d) cache hit → fake not called, `generatedBy` `cache`; (e) fake throws → `template`; (f) fake returns 2 reasons for 3 pairings → template reasons kept, LLM summary used. `app.test.ts`: `/api/handover`alice → 200 with`generatedBy` `template` (`llm: null`); `nobody` → 404.
   - **Verify:** `npm --workspace backend run cli -- handovers` on the demo graph (live LLM, 5 requests); then `POST /api/handover` for one of them returns `generatedBy` `cache`.
   - **Out of scope:** UI, posting to GitHub (never).
+    Note: The live `handovers` run cached LLM plans for swilly22, AviAvni, GomezGab, gkorland and DvirDukhan (5 requests). Running `POST /api/handover` through `createApp` with `llm: null` returned `generatedBy` `cache` for all five. The LLM schema name is `handover_narrative`. `handover.test.ts` has its own fake `Llm`, close to the one in `decisions.test.ts`. They were not merged because that needs a shared test helper, and CLAUDE.md says to ask first.
 
 ## Phase 6: MCP server (F8)
 

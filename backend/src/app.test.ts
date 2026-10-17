@@ -3,6 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createApp } from "./app.js";
 import { openDb } from "./db.js";
 import { loadEnv } from "./env.js";
+import { RateLimitError, type Llm } from "./llm.js";
 import { getComponent, getRiskMap, getTeamRanking } from "./risk.js";
 import { withFixtureGraph } from "./test-graph.js";
 
@@ -19,14 +20,22 @@ describe("GET /api/health", () => {
   });
 
   it("reports an empty graph", async () => {
-    const app = createApp({ db: await dbPromise, webOrigin: WEB_ORIGIN });
+    const app = createApp({
+      db: await dbPromise,
+      llm: null,
+      webOrigin: WEB_ORIGIN,
+    });
     const response = await app.request("/api/health");
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ ok: true, nodes: 0 });
   });
 
   it("allows the web origin", async () => {
-    const app = createApp({ db: await dbPromise, webOrigin: WEB_ORIGIN });
+    const app = createApp({
+      db: await dbPromise,
+      llm: null,
+      webOrigin: WEB_ORIGIN,
+    });
     const response = await app.request("/api/health", {
       headers: { Origin: WEB_ORIGIN },
     });
@@ -47,19 +56,27 @@ describe("fixture routes", () => {
     await fixture.cleanup();
   });
 
-  function request(path: string, init?: RequestInit) {
-    return createApp({ db: fixture.db, webOrigin: WEB_ORIGIN }).request(
+  function request(path: string, init?: RequestInit, llm: Llm | null = null) {
+    return createApp({ db: fixture.db, llm, webOrigin: WEB_ORIGIN }).request(
       path,
       init,
     );
   }
 
+  function post(path: string, body: unknown, llm: Llm | null = null) {
+    return request(
+      path,
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(body),
+      },
+      llm,
+    );
+  }
+
   function simulate(body: unknown) {
-    return request("/api/simulate", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(body),
-    });
+    return post("/api/simulate", body);
   }
 
   it("GET /api/risk-map returns the risk map", async () => {
@@ -102,5 +119,55 @@ describe("fixture routes", () => {
 
   it("POST /api/simulate returns 400 for an invalid body", async () => {
     expect((await simulate({})).status).toBe(400);
+  });
+
+  it("POST /api/handover returns the template plan without an LLM", async () => {
+    const response = await post("/api/handover", { personId: "alice" });
+    expect(response.status).toBe(200);
+    expect(await response.json()).toMatchObject({ generatedBy: "template" });
+  });
+
+  it("POST /api/handover returns 404 for an unknown person", async () => {
+    const response = await post("/api/handover", { personId: "nobody" });
+    expect(response.status).toBe(404);
+    expect(await response.json()).toEqual({ error: "not_found" });
+  });
+
+  it("POST /api/ask returns 503 without an LLM", async () => {
+    const response = await post("/api/ask", {
+      question: "Who knows src/db?",
+      history: [],
+    });
+    expect(response.status).toBe(503);
+    expect(await response.json()).toEqual({
+      error: "llm_unavailable",
+      message: "The assistant is not configured.",
+    });
+  });
+
+  it("POST /api/ask returns 429 when the LLM is rate limited", async () => {
+    const rateLimitedLlm: Llm = {
+      model: "test-model",
+      json() {
+        return Promise.reject(new Error("json is not used"));
+      },
+      chat() {
+        return Promise.reject(new RateLimitError("429"));
+      },
+    };
+    const response = await post(
+      "/api/ask",
+      { question: "Who knows src/db?", history: [] },
+      rateLimitedLlm,
+    );
+    expect(response.status).toBe(429);
+    expect(await response.json()).toEqual({
+      error: "rate_limited",
+      message: "Rate limit reached, try again in a minute.",
+    });
+  });
+
+  it("POST /api/ask returns 400 for an empty question", async () => {
+    expect((await post("/api/ask", { question: "" })).status).toBe(400);
   });
 });

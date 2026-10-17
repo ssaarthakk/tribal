@@ -8,7 +8,12 @@ export type LlmMessage =
   | { role: "assistant"; content: string | null; toolCalls?: LlmToolCall[] }
   | { role: "tool"; toolCallId: string; content: string };
 
-export type LlmToolCall = { id: string; name: string; arguments: string };
+export type LlmToolCall = {
+  id: string;
+  name: string;
+  arguments: string;
+  thoughtSignature?: string;
+};
 
 export type LlmTool = {
   name: string;
@@ -37,6 +42,19 @@ export function toJsonSchema(schema: z.ZodType): Record<string, unknown> {
   return jsonSchema;
 }
 
+const ThoughtSignatureSchema = z.object({
+  extra_content: z.object({
+    google: z.object({ thought_signature: z.string() }),
+  }),
+});
+
+function readThoughtSignature(call: unknown): string | undefined {
+  const parsed = ThoughtSignatureSchema.safeParse(call);
+  return parsed.success
+    ? parsed.data.extra_content.google.thought_signature
+    : undefined;
+}
+
 function toOpenAiMessage(message: LlmMessage): ChatCompletionMessageParam {
   if (message.role === "tool") {
     return {
@@ -54,6 +72,11 @@ function toOpenAiMessage(message: LlmMessage): ChatCompletionMessageParam {
           id: call.id,
           type: "function" as const,
           function: { name: call.name, arguments: call.arguments },
+          ...(call.thoughtSignature !== undefined && {
+            extra_content: {
+              google: { thought_signature: call.thoughtSignature },
+            },
+          }),
         })),
       }),
     };
@@ -136,17 +159,18 @@ export function createLlm(
       const message = completion.choices[0]?.message;
       return {
         content: message?.content ?? null,
-        toolCalls: (message?.tool_calls ?? []).flatMap((call) =>
-          call.type === "function"
-            ? [
-                {
-                  id: call.id,
-                  name: call.function.name,
-                  arguments: call.function.arguments,
-                },
-              ]
-            : [],
-        ),
+        toolCalls: (message?.tool_calls ?? []).flatMap((call) => {
+          if (call.type !== "function") return [];
+          const thoughtSignature = readThoughtSignature(call);
+          return [
+            {
+              id: call.id,
+              name: call.function.name,
+              arguments: call.function.arguments,
+              ...(thoughtSignature !== undefined && { thoughtSignature }),
+            },
+          ];
+        }),
       };
     },
   };

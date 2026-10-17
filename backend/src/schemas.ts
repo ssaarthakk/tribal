@@ -136,6 +136,22 @@ export const SearchHitSchema = z.object({
   score: z.number(),
 });
 export const SourceSchema = z.object({ title: z.string(), url: z.string() });
+export const NodeKindSchema = z.enum([
+  "person",
+  "component",
+  "decision",
+  "pr",
+  "issue",
+  "doc",
+]);
+export const GraphPathSchema = z.object({
+  nodes: z.array(
+    z.object({ id: z.string(), kind: NodeKindSchema, label: z.string() }),
+  ),
+  links: z.array(
+    z.object({ source: z.string(), target: z.string(), type: z.string() }),
+  ),
+});
 export const TopicComponentSchema = z.object({
   path: z.string(),
   relevance: z.number(),
@@ -145,11 +161,68 @@ export const WhoKnowsSchema = z.object({
   components: z.array(TopicComponentSchema),
   sources: z.array(SourceSchema),
 });
+export const ChatTurnSchema = z.object({
+  role: z.enum(["user", "assistant"]),
+  content: z.string().max(4000),
+});
+export const AskRequestSchema = z.object({
+  question: z.string().trim().min(1).max(500),
+  history: z.array(ChatTurnSchema).max(10),
+});
+export const AskResponseSchema = z.object({
+  answer: z.string(),
+  sources: z.array(SourceSchema),
+  path: GraphPathSchema,
+  toolCalls: z.array(z.string()),
+});
 export const PersonIdRequestSchema = z.object({
   personId: z.string().min(1).max(200),
 });
+export const HandoverPlanSchema = z.object({
+  person: PersonRefSchema,
+  summary: z.string(),
+  knowledgeToDocument: z.array(
+    z.object({ componentPath: z.string(), reason: z.string() }),
+  ),
+  pairings: z.array(
+    z.object({
+      componentPath: z.string(),
+      with: PersonRefSchema,
+      reason: z.string(),
+    }),
+  ),
+  decisionsNeedingOwner: z.array(
+    z.object({
+      decisionId: z.string(),
+      summary: z.string(),
+      sourceUrl: z.string(),
+      suggestedOwner: PersonRefSchema.nullable(),
+    }),
+  ),
+  workToReassign: z.array(
+    z.object({
+      kind: z.enum(["pr", "issue"]),
+      number: z.number().int(),
+      title: z.string(),
+      url: z.string(),
+      suggestedOwner: PersonRefSchema.nullable(),
+    }),
+  ),
+});
+export const HandoverResponseSchema = z.object({
+  plan: HandoverPlanSchema,
+  markdown: z.string(),
+  issueTitle: z.string(),
+  issueBody: z.string(),
+  generatedBy: z.enum(["cache", "llm", "template"]),
+});
 
 export type RiskLevel = z.infer<typeof RiskLevelSchema>;
+export type PersonRef = z.infer<typeof PersonRefSchema>;
+export type WorkItem = z.infer<typeof WorkItemSchema>;
+export type Source = z.infer<typeof SourceSchema>;
+export type GraphPath = z.infer<typeof GraphPathSchema>;
+export type ToolResult = { data: unknown; sources: Source[]; path: GraphPath };
 export type ComponentSummary = z.infer<typeof ComponentSummarySchema>;
 export type RiskMap = z.infer<typeof RiskMapSchema>;
 export type DecisionView = z.infer<typeof DecisionViewSchema>;
@@ -160,6 +233,10 @@ export type TeamRanking = z.infer<typeof TeamRankingSchema>;
 export type Expertise = z.infer<typeof ExpertiseSchema>;
 export type SearchHit = z.infer<typeof SearchHitSchema>;
 export type WhoKnows = z.infer<typeof WhoKnowsSchema>;
+export type ChatTurn = z.infer<typeof ChatTurnSchema>;
+export type AskResponse = z.infer<typeof AskResponseSchema>;
+export type HandoverPlan = z.infer<typeof HandoverPlanSchema>;
+export type HandoverResponse = z.infer<typeof HandoverResponseSchema>;
 
 export function riskLevel(busFactor: number): RiskLevel {
   if (busFactor <= 0) return "orphaned";

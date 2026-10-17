@@ -90,6 +90,38 @@ describe("llm", () => {
     });
   });
 
+  it("chat passes Gemini thought signatures back on tool calls", async () => {
+    const { llm, requestBodies } = fakeLlm(
+      completion({
+        content: null,
+        tool_calls: [
+          {
+            id: "t1",
+            type: "function",
+            function: { name: "bus_factor", arguments: "{}" },
+            extra_content: { google: { thought_signature: "sig" } },
+          },
+        ],
+      }),
+    );
+    const { toolCalls } = await llm.chat(user, []);
+    expect(toolCalls).toEqual([
+      {
+        id: "t1",
+        name: "bus_factor",
+        arguments: "{}",
+        thoughtSignature: "sig",
+      },
+    ]);
+    await llm.chat(
+      [...user, { role: "assistant", content: null, toolCalls }],
+      [],
+    );
+    expect(requestBodies[1]).toContain(
+      '"extra_content":{"google":{"thought_signature":"sig"}}',
+    );
+  });
+
   it("turns HTTP 429 into RateLimitError", async () => {
     const { llm } = fakeLlm({ error: { message: "slow down" } }, 429);
     await expect(
