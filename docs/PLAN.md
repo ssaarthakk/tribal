@@ -75,7 +75,7 @@ Their specs and `Note:` lines are in `docs/PLAN-done.md`. Read the matching task
 
 All screens: Tailwind only, no new UI libraries, labels on every control, `focus-visible:ring-2` on interactive elements, risk shown as text and colour. Use `InferResponseType` from `hono/client` for response types, or `import type` from `backend/src/schemas.ts` (ARCH §6 allows type-only imports from `app.ts` and `schemas.ts`).
 
-- [ ] **7.1 App shell, graph view and Risk Map**
+- [x] **7.1 App shell, graph view and Risk Map**
   - **Goal:** Navigation between the three screens and the Risk Map graph with a components table.
   - **Files:** create `web/src/colors.ts`, `web/src/components/GraphView.tsx`, `web/src/components/RiskBadge.tsx`, `web/src/screens/RiskMapScreen.tsx`, `web/src/screens/SimulationScreen.tsx` and `web/src/screens/AskScreen.tsx` (each a heading "Coming in task 7.x" placeholder until its task); modify `web/src/App.tsx`, `web/package.json`.
   - **Spec:**
@@ -92,8 +92,9 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** none (no web test setup); `npm run check` (includes the web build).
   - **Verify:** run the backend on the demo graph and `npm --workspace web run dev`; screenshot `#risk` with the `run` skill and check it.
   - **Out of scope:** component details, other screens.
+    Note: ARCH §11 has no colour for the `component` node kind, so `KIND_COLORS.component` is `#0369a1`; graph node ids use the ARCH §8 `person:`/`component:` prefixes.
 
-- [ ] **7.2 Component details panel**
+- [x] **7.2 Component details panel**
   - **Goal:** Show who knows a component, its decisions, docs and recent PRs.
   - **Files:** create `web/src/components/ComponentPanel.tsx`, `web/src/components/SourcesList.tsx`; modify `web/src/screens/RiskMapScreen.tsx`.
   - **Spec:** `ComponentPanel` `{ path: string; onClose: () => void }` loads `/api/component?path=`. Shows: heading with path and `RiskBadge`; "Experts" list (name, login, share as %, last active date, "expert" tag); "Decisions" list (summary, status tag, decided date, "made by" names, link "Source" to `sourceUrl` with `target="_blank" rel="noopener noreferrer"`, "supersedes …" text when present); "Docs" and "Recent pull requests" as `SourcesList`. `SourcesList` `{ sources: { title: string; url: string }[]; heading: string }` → heading + list of external links (new tab, `rel="noopener noreferrer"`), "None" when empty. In `RiskMapScreen`, the selected component opens the panel beside the tables and highlights the component and its experts in the graph; "Close" button returns focus to the "Details" button that opened it.
@@ -105,8 +106,9 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** none; `npm run check`.
   - **Verify:** screenshot with a component selected.
   - **Out of scope:** other screens.
+    Note: `/api/component` returns `madeBy` as person ids (logins), so the panel shows the expert's name when the person is in the experts list and the login otherwise; "supersedes" shows decision ids. The graph highlights the component and the people with `expert: true` links to it.
 
-- [ ] **7.3 Departure Simulation screen**
+- [x] **7.3 Departure Simulation screen**
   - **Goal:** Pick a person, simulate their departure, and see the before/after.
   - **Files:** modify `web/src/screens/SimulationScreen.tsx`.
   - **Spec:** loads `/api/risk-map` for people and components. A `<label>`led `<select>` "Person leaving" (people sorted by name, showing `name (login)`), and a "Simulate departure" button → `POST /api/simulate`. Results: four summary counts (components orphaned, components left with one expert, decisions losing their only owner, open items stranded); table "Affected components" (path, before → after with `RiskBadge` for after, successors as `name (score to 1 decimal)`); "Decisions losing their only owner" (summary with source link); "Open work" (PR/Issue links); "Nearby collaborators" (names with weight). A `GraphView` with a "Before"/"After" radio group: Before = risk-map graph; After = the departing person and their links dimmed, affected components recoloured with `riskAfter` and highlighted.
@@ -118,8 +120,9 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** none; `npm run check`.
   - **Verify:** screenshots of before and after for the top-ranked person.
   - **Out of scope:** handover plan (7.4).
+    Note: The risk-map graph builder moved into an exported `riskMapGraph(riskMap, riskOf)` in `RiskMapScreen.tsx` so both screens share it. `GraphView` has no link colouring, so After dims only the departing person's node; their links keep the default faint colour. Decisions are a hand-written list rather than `SourcesList` because several decisions can share one thread URL, and `SourcesList` keys rows by URL.
 
-- [ ] **7.4 Handover panel**
+- [x] **7.4 Handover panel**
   - **Goal:** Show the handover plan and make it easy to export.
   - **Files:** create `web/src/components/HandoverPanel.tsx`; modify `web/src/screens/SimulationScreen.tsx`.
   - **Spec:** below the simulation results, a "Write handover plan" button → `POST /api/handover`. Shows the summary, the four sections as lists, and a small label "Written by the assistant" (`llm`/`cache`) or "Generated from the graph" (`template`). Buttons: "Copy markdown" (`navigator.clipboard.writeText(markdown)`), "Copy issue text" (title, blank line, body). After copying, an `aria-live="polite"` message "Copied". A note: "Tribal never posts to GitHub. Paste the issue text yourself."
@@ -132,7 +135,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Verify:** screenshot; paste the copied markdown into a scratch file and compare with the API response.
   - **Out of scope:** editing plans.
 
-- [ ] **7.5 Ask screen**
+- [x] **7.5 Ask screen**
   - **Goal:** Chat with the agent and see the sources and graph path of each answer.
   - **Files:** modify `web/src/screens/AskScreen.tsx`.
   - **Spec:** a form with a `<label>`led `<textarea>` "Question" (max 500 characters) and an "Ask" button; three example-question buttons that fill and submit (start with "Who knows the query planner best?", "What happens if the top-ranked maintainer leaves?" and "Which decisions affect src/commands?", then replace them with three that give good answers on the demo data). The conversation list shows each question and answer; history (last 10 turns) is sent with each request. For the latest answer: `SourcesList` "Sources" and a `GraphView` of its `path` (node colours from `KIND_COLORS`, all nodes labelled), plus the tool names used as small text. 429 → "Rate limit reached, try again in a minute."; 503 → "The assistant is not configured on this server."; while waiting, the button is disabled and an `aria-live` status says "Thinking…".
@@ -144,6 +147,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** none; `npm run check`.
   - **Verify:** screenshot after one example question; trigger 503 by running the backend without `LLM_API_KEY` once.
   - **Out of scope:** streaming, markdown rendering.
+    Note: "Who knows the query planner best?" was replaced because its sources were loosely related search hits; the final three examples were checked against the local backend on the dev graph (7, 12 and 3 sources), not yet a deployed demo. All path nodes are passed as `highlighted` so `GraphView` labels them.
 
 ## Phase 8: Deployment
 
