@@ -2,6 +2,7 @@ import { z } from "zod";
 import { componentName, componentOf, selectComponents } from "./components.js";
 import type { DecisionCache, RepoConfig, Snapshot } from "./datafiles.js";
 import type { Db } from "./db.js";
+import { computeExpertise } from "./expertise.js";
 import { resolveIdentities } from "./identity.js";
 import {
   COUNT_LABELS,
@@ -281,6 +282,7 @@ export async function loadSnapshot(
     ),
   );
   await db.write(SET_DECISION_STATUS);
+  await computeExpertise(db, Date.parse(snapshot.fetchedAt));
 
   return {
     nodes: await countNodes(db),

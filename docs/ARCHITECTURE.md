@@ -494,11 +494,11 @@ MATCH ()-[x:COLLABORATES_WITH]->() DELETE x
 -- ADD_REVIEW_COLLABORATION
 MATCH (a:Person)-[:REVIEWED]->(pr:PullRequest)<-[:AUTHORED]-(b:Person)
 WHERE a <> b
-WITH a, b, count(pr) AS reviews
-MERGE (a)-[x:COLLABORATES_WITH]->(b)
+WITH CASE WHEN a.id < b.id THEN a ELSE b END AS first, CASE WHEN a.id < b.id THEN b ELSE a END AS second, count(pr) AS reviews
+MERGE (first)-[x:COLLABORATES_WITH]->(second)
 ON CREATE SET x.weight = 0.0
 SET x.weight = x.weight + reviews
-MERGE (b)-[y:COLLABORATES_WITH]->(a)
+MERGE (second)-[y:COLLABORATES_WITH]->(first)
 ON CREATE SET y.weight = 0.0
 SET y.weight = y.weight + reviews
 

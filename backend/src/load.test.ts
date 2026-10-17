@@ -40,6 +40,8 @@ const EXPECTED_RELATIONSHIPS = {
   DECIDED_IN: 3,
   AFFECTS: 3,
   SUPERSEDES: 1,
+  KNOWS_ABOUT: 17,
+  COLLABORATES_WITH: 14,
 };
 
 const TRICKY_TITLE = `He said "hi" \\ back\\slash\n'single' 🚀`;

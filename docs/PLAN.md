@@ -226,7 +226,7 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
 
 ## Phase 3: Expertise and knowledge risk (F3, F4)
 
-- [ ] **3.1 Expertise scores, experts and bus factor**
+- [x] **3.1 Expertise scores, experts and bus factor**
   - **Goal:** Compute `KNOWS_ABOUT`, experts and bus factor in Cypher as part of every load.
   - **Files:** create `backend/src/expertise.ts`, `backend/src/expertise.test.ts`; modify `backend/src/queries.ts`, `backend/src/load.ts`, `backend/src/load.test.ts`.
   - **Spec:** `SCORING` and `computeExpertise` exactly as ARCH §4 and §8, but run only `DELETE_KNOWS_ABOUT` through `SET_BUS_FACTOR` (collaboration comes in 3.2). Add those queries plus `LIST_COMPONENTS` and `PERSON_COMPONENTS` from ARCH §7. `loadSnapshot` calls `computeExpertise(db, Date.parse(snapshot.fetchedAt))` after `SET_DECISION_STATUS`.
@@ -238,8 +238,9 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Tests:** `expertise.test.ts` (one `withFixtureGraph`): (a) for each of the 5 people, `PERSON_COMPONENTS` rows match the table (`toBeCloseTo(x, 4)`; `lastActive` compared as ISO date prefix); (b) `LIST_COMPONENTS` bus factors match; (c) after a second `computeExpertise`, (a) still holds. `load.test.ts`: `KNOWS_ABOUT` count is 17.
   - **Verify:** `npm --workspace backend run cli -- load`, then with the MCP server list the 10 lowest-bus-factor components of the demo graph.
   - **Out of scope:** collaboration, routes.
+  - Note: the FalkorDB MCP server was down, so the queries were checked read-only through `openDb`. The demo graph has 387 `KNOWS_ABOUT` edges. Lowest bus factors: `graph/src/parser` 1, then `.github`, `bench/src`, `graph`, `graph/src/effects`, `graph/src/graph`, `graph/src/index`, `graph/src/planner`, `graph/src/runtime` and `src/algorithms` at 2.
 
-- [ ] **3.2 Collaboration graph and team ranking**
+- [x] **3.2 Collaboration graph and team ranking**
   - **Goal:** Build `COLLABORATES_WITH` and rank people with FalkorDB's PageRank and betweenness.
   - **Files:** create `backend/src/risk.test.ts`; modify `backend/src/expertise.ts`, `backend/src/queries.ts`, `backend/src/risk.ts`, `backend/src/schemas.ts` (create), `backend/src/expertise.test.ts`.
   - **Spec:** `computeExpertise` now also runs `DELETE_COLLABORATION`, `ADD_REVIEW_COLLABORATION`, `ADD_SHARED_EXPERTISE_COLLABORATION` (weight `SCORING.sharedExpertiseWeight`). Add those queries and `TEAM_PAGERANK`, `TEAM_BETWEENNESS`, `NEARBY_COLLABORATORS`. `schemas.ts`: `PersonRefSchema`, `RankedPersonSchema`, `TeamRankingSchema` (ARCH §8). `risk.ts`: `getTeamRanking` as ARCH §8.
@@ -251,8 +252,10 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Tests:** `expertise.test.ts`: `NEARBY_COLLABORATORS` for alice = carol 2, bob 1.5, erin 1.5, dave 1 (in that order); for dave the direct weights are erin 3, alice 1, carol 0.5 and bob 0 (two hops); `COLLABORATES_WITH` count 14. `risk.test.ts`: `getTeamRanking` assertions from acceptance criterion 2.
   - **Verify:** print the demo graph's top 10 ranking from a throwaway scratchpad script and add it as a `Note:` (used to choose demo people later).
   - **Out of scope:** routes.
+  - Note: the ARCH §7 `ADD_REVIEW_COLLABORATION` made duplicate edges on FalkorDB when two people reviewed each other (both rows MERGE both directions in one query, and FalkorDB does not see edges made by earlier rows), giving 18 edges instead of 14. It now groups by the unordered pair (`first`/`second` by id) before the MERGEs; same weights, ARCH §7 updated to match. The FalkorDB MCP server was down, so queries were checked through `openDb` and the tests.
+  - Note: demo graph has 92 `COLLABORATES_WITH` edges over 275 people. Top 10 by PageRank (PageRank, betweenness): swilly22 0.0016 840, AviAvni 0.0013 630, GomezGab 0.0011 496, gkorland 0.0009 252.5, DvirDukhan 0.0008 247.3, barakb 0.0008 124.3, dudizimber 0.0007 66.8, MuhammadQadora 0.0003 0, Anchel123 0.0003 0, danshalev7 0.0002 0.
 
-- [ ] **3.3 Departure simulation**
+- [x] **3.3 Departure simulation**
   - **Goal:** The hero query: what happens if a person leaves, plus `POST /api/simulate`.
   - **Files:** modify `backend/src/queries.ts`, `backend/src/schemas.ts`, `backend/src/risk.ts`, `backend/src/risk.test.ts`, `backend/src/app.ts`, `backend/src/app.test.ts`, `backend/package.json`.
   - **Spec:** add `GET_PERSON`, `OPEN_WORK`, `DEPARTURE_COMPONENTS`, `DEPARTURE_SUCCESSORS`, `DEPARTURE_DECISIONS`. Add to `schemas.ts`: `RiskLevelSchema`, `SuccessorSchema`, `AffectedComponentSchema`, `OrphanedDecisionSchema`, `WorkItemSchema`, `CollaboratorSchema`, `DepartureReportSchema`, `PersonIdRequestSchema`, `riskLevel`, `toIso`. `simulateDeparture` as ARCH §8; `OPEN_WORK` rows sorted `pr` before `issue`, then by number. Route `POST /api/simulate` with `zValidator("json", PersonIdRequestSchema)`; 404 `{ error: "not_found" }` when the person doesn't exist.
@@ -265,8 +268,9 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Tests:** `risk.test.ts`: (a) alice report deep-equals the full expected object (write it out in the test from ARCH §12; dates as ISO strings); (b) bob report; (c) `simulateDeparture(db, "nobody")` is `null`; (d) counts unchanged. `app.test.ts`: `POST /api/simulate` with `{ personId: "alice" }` → 200 and `orphaned` `["src/db"]`; `{ personId: "nobody" }` → 404; `{}` → 400.
   - **Verify:** `curl -X POST localhost:3000/api/simulate -H 'content-type: application/json' -d '{"personId":"<top person from 3.2>"}'` on the demo graph.
   - **Out of scope:** handover plan, UI.
+  - Note: the FalkorDB MCP server was down, so the new queries were checked through the tests and the running server. Demo check: `swilly22` leaving drops 10 components from bus factor 2 to 1 (critical), orphans none, and leaves 40 open work items.
 
-- [ ] **3.4 Read models and routes: risk map, ranking, component, person**
+- [x] **3.4 Read models and routes: risk map, ranking, component, person**
   - **Goal:** Everything the Risk Map needs, as functions and routes.
   - **Files:** modify `backend/src/queries.ts`, `backend/src/schemas.ts`, `backend/src/risk.ts`, `backend/src/risk.test.ts`, `backend/src/app.ts`, `backend/src/app.test.ts`.
   - **Spec:** add `RISK_MAP_LINKS`, `GET_COMPONENT`, `COMPONENT_EXPERTS`, `COMPONENT_DECISIONS`, `COMPONENT_DOCS`, `PERSON_DECISIONS` (`COMPONENT_RECENT_PULL_REQUESTS` exists from 2.2). Schemas from ARCH §8 needed by these functions. Functions `listComponents`, `getRiskMap`, `getComponent`, `getPerson`, `getDecisionHistory` as ARCH §8. Routes `GET /api/risk-map`, `GET /api/ranking`, `GET /api/component?path=` as ARCH §9 (`getPerson` has no route; the `get_person` tool uses it).
@@ -279,8 +283,9 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Tests:** `risk.test.ts` for criteria 1–3 (exact values); `app.test.ts`: each route returns 200 for a fixture value and 404 for an unknown one.
   - **Verify:** `curl localhost:3000/api/risk-map | head -c 500` on the demo graph.
   - **Out of scope:** search.
+  - Note: the FalkorDB MCP server was down, so the new queries were checked through the tests and the running server. `madeBy` and `supersedes` are sorted in TypeScript because `collect` order is not fixed. Risk-map links tie on score (carol and erin on `tests`), so the test sorts links before comparing.
 
-- [ ] **3.5 Full-text search and "who knows about X"**
+- [x] **3.5 Full-text search and "who knows about X"**
   - **Goal:** Find PRs, issues, decisions and docs by keywords, and the people who know the matching components.
   - **Files:** create `backend/src/search.ts`, `backend/src/search.test.ts`; modify `backend/src/queries.ts`, `backend/src/schemas.ts`.
   - **Spec:** add `SEARCH_ALL` and `TOPIC_COMPONENTS` (ARCH §7, including the fallback rule for `SEARCH_ALL`). Schemas `SearchHitSchema`, `SourceSchema`, `TopicComponentSchema`, `WhoKnowsSchema`, `ExpertiseSchema`. `search.ts` exactly as ARCH §8. `search` and `whoKnows` return empty results without querying when `toFullTextQuery` is empty.
@@ -289,6 +294,7 @@ Done now, during Phase 0: WeMakeDevs registration, Google AI Studio key, FalkorD
   - **Tests:** `search.test.ts`: ARCH §12 search expectations; `search(db, 'pagination" OR 1=1 -- @title:{x}')` resolves (no throw); `toFullTextQuery` cases: duplicates removed, words under 3 characters dropped, lowercased.
   - **Verify:** throwaway script: `whoKnows(db, "query planner")` on the demo graph returns components under `graph/src/planner` or `src/execution_plan`; record the top result in a `Note:`.
   - **Out of scope:** the agent.
+  - Note: `SEARCH_ALL` runs as written (FalkorDB accepts `ORDER BY ... LIMIT` in `UNION` branches). The FalkorDB MCP server was down, so queries were checked through the tests. `ExpertRowSchema` and `toExpertise` live in `schemas.ts` so `risk` and `search` share them without breaking module boundaries. Demo check fails as specified: `whoKnows(db, "query planner")` ranks `tests/flow` first (153.6), then `(root)`, `.github/workflows`. Summed scores favour widely touched components, and "query" matches most PRs; `src/execution_plan` is 10th. With "planner" alone `graph/src/planner` is 2nd. User chose to keep the ARCH ranking; pick demo topics that rank well.
 
 ## Phase 4: Decisions (F5)
 
