@@ -245,7 +245,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
 
 ## Phase 7 (continued): polish after deployment
 
-- [ ] **7.6 UI polish and accessibility pass**
+- [x] **7.6 UI polish and accessibility pass**
   - **Goal:** Make the three screens demo-ready and accessible.
   - **Files:** modify files under `web/src/` only.
   - **Spec:** keyboard-only pass through every screen (logical tab order, visible focus, no traps); check colour contrast of text and badges (WCAG AA 4.5:1); loading, empty and error states on every API call; layout works at 1280×720 (recording size) and 390 px wide; page `<title>` per screen ("Risk map · Tribal" etc.); remove placeholder text. Redeploy with `scripts/deploy-web.sh`.
@@ -257,6 +257,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** none; `npm run check`.
   - **Verify:** screenshots of each screen at 1280×720 on the live site.
   - **Out of scope:** new features.
+    Note: Screenshots were taken with headless Chrome driven over the DevTools protocol (a throwaway scratch script, with device-metrics emulation for 390 px because headless windows can't be narrower than 500 px), mapping the domain to Cloudflare's IP because the local router DNS still doesn't resolve it. `GraphView` now calls `zoomToFit` when the layout settles, so the graph fills its box (and node labels show, since that zoom is above 1.5).
 
 ## Phase 9: Submission
 
@@ -341,6 +342,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** none; `npm run check`.
   - **Verify:** read both files once end to end.
   - **Out of scope:** publishing the blog.
+    Note: The user posts the blog to Medium themselves (paste into the editor, or **Import a story** with the pushed `docs/BLOG.md` GitHub URL). Medium has no official MCP and stopped issuing API tokens in 2025, so the agent never posts it.
 
 - [ ] **9.7 [MANUAL] Submit on WeMakeDevs**
   - **Steps for the user:**

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import ForceGraph2D from "react-force-graph-2d";
+import ForceGraph2D, { type ForceGraphMethods } from "react-force-graph-2d";
 import { DIMMED, HIGHLIGHT } from "../colors";
 
 type GraphNode = { id: string; label: string; color: string; size: number };
@@ -23,6 +23,9 @@ export function GraphView({
   label,
 }: GraphViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const graphRef = useRef<ForceGraphMethods<GraphNode, GraphLink> | undefined>(
+    undefined,
+  );
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
@@ -54,10 +57,12 @@ export function GraphView({
     >
       {width > 0 && (
         <ForceGraph2D<GraphNode, GraphLink>
+          ref={graphRef}
           graphData={graphData}
           width={width}
           height={480}
           cooldownTicks={100}
+          onEngineStop={() => graphRef.current?.zoomToFit(400, 20)}
           nodeCanvasObject={(node, context, globalScale) => {
             const x = node.x ?? 0;
             const y = node.y ?? 0;

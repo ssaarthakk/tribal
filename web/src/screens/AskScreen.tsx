@@ -158,17 +158,23 @@ export function AskScreen() {
         </section>
       )}
       {latest && (
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <section aria-labelledby="answer-path-heading">
             <h3 id="answer-path-heading" className="mb-2 text-lg font-semibold">
               Graph path of the latest answer
             </h3>
-            <GraphView
-              nodes={graph.nodes}
-              links={graph.links}
-              highlighted={allNodes}
-              label="Graph of the people, components, decisions and sources the latest answer used"
-            />
+            {graph.nodes.length === 0 ? (
+              <p className="text-slate-600">
+                This answer did not use any graph nodes.
+              </p>
+            ) : (
+              <GraphView
+                nodes={graph.nodes}
+                links={graph.links}
+                highlighted={allNodes}
+                label="Graph of the people, components, decisions and sources the latest answer used"
+              />
+            )}
           </section>
           <div className="space-y-4">
             <SourcesList sources={latest.sources} heading="Sources" />

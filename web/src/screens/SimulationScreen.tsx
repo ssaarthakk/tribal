@@ -118,7 +118,7 @@ export function SimulationScreen() {
         {simulateFailed && <p role="alert">Could not simulate departure.</p>}
       </div>
       {report && (
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <section aria-labelledby="simulation-graph-heading">
             <h3
               id="simulation-graph-heading"
@@ -138,7 +138,6 @@ export function SimulationScreen() {
                     onChange={() => {
                       setView(option);
                     }}
-                    className="focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none"
                   />
                   {option === "before" ? "Before" : "After"}
                 </label>
@@ -175,39 +174,46 @@ export function SimulationScreen() {
             </dl>
             <section>
               <h4 className="mb-2 font-semibold">Affected components</h4>
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr>
-                    <th scope="col">Path</th>
-                    <th scope="col">Bus factor</th>
-                    <th scope="col">Successors</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {report.affectedComponents.map((component) => (
-                    <tr
-                      key={component.path}
-                      className="border-t border-slate-200"
-                    >
-                      <td className="py-1 font-mono">{component.path}</td>
-                      <td>
-                        {component.busFactorBefore} → {component.busFactorAfter}{" "}
-                        <RiskBadge level={component.riskAfter} />
-                      </td>
-                      <td>
-                        {component.successors.length === 0
-                          ? "None"
-                          : component.successors
-                              .map(
-                                ({ person, score }) =>
-                                  `${person.name} (${score.toFixed(1)})`,
-                              )
-                              .join(", ")}
-                      </td>
+              {report.affectedComponents.length === 0 ? (
+                <p className="text-slate-600">None</p>
+              ) : (
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">Path</th>
+                      <th scope="col">Bus factor</th>
+                      <th scope="col">Successors</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {report.affectedComponents.map((component) => (
+                      <tr
+                        key={component.path}
+                        className="border-t border-slate-200"
+                      >
+                        <td className="py-1 font-mono wrap-anywhere">
+                          {component.path}
+                        </td>
+                        <td>
+                          {component.busFactorBefore} →{" "}
+                          {component.busFactorAfter}{" "}
+                          <RiskBadge level={component.riskAfter} />
+                        </td>
+                        <td>
+                          {component.successors.length === 0
+                            ? "None"
+                            : component.successors
+                                .map(
+                                  ({ person, score }) =>
+                                    `${person.name} (${score.toFixed(1)})`,
+                                )
+                                .join(", ")}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </section>
             <section>
               <h4 className="font-semibold">

@@ -44,6 +44,10 @@ export function App() {
     };
   }, []);
 
+  useEffect(() => {
+    document.title = `${screen.title} · Tribal`;
+  }, [screen]);
+
   const status =
     nodes === null
       ? "Checking backend..."
@@ -52,17 +56,17 @@ export function App() {
         : `Backend connected: ${String(nodes)} nodes in the graph`;
 
   return (
-    <div className="mx-auto max-w-7xl p-6 text-slate-900">
+    <div className="mx-auto max-w-7xl p-4 text-slate-900 sm:p-6">
       <header className="mb-6">
         <h1 className="text-2xl font-bold">Tribal</h1>
         <p className="text-slate-600">Knowledge risk for FalkorDB/FalkorDB</p>
-        <nav aria-label="Screens" className="mt-4 flex gap-2">
+        <nav aria-label="Screens" className="mt-4 flex flex-wrap gap-2">
           {SCREENS.map(({ hash, title }) => (
             <a
               key={hash}
               href={hash}
               aria-current={hash === screen.hash ? "page" : undefined}
-              className="rounded px-3 py-1 text-slate-700 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none aria-[current=page]:bg-slate-900 aria-[current=page]:text-white"
+              className="rounded px-3 py-1 text-slate-700 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 focus-visible:outline-none aria-[current=page]:bg-slate-900 aria-[current=page]:text-white"
             >
               {title}
             </a>

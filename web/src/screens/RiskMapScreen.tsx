@@ -84,7 +84,7 @@ export function RiskMapScreen() {
   if (!riskMap || !ranking) return <p role="status">Loading risk map...</p>;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <section aria-labelledby="graph-heading">
         <h2 id="graph-heading" className="mb-2 text-xl font-semibold">
           Risk map
@@ -122,63 +122,78 @@ export function RiskMapScreen() {
         )}
         <section>
           <h2 className="mb-2 text-xl font-semibold">Components by risk</h2>
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr>
-                <th scope="col">Path</th>
-                <th scope="col">Bus factor</th>
-                <th scope="col">Risk</th>
-                <th scope="col">
-                  <span className="sr-only">Actions</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {riskMap.components.map((component) => (
-                <tr key={component.path} className="border-t border-slate-200">
-                  <td className="py-1 font-mono">{component.path}</td>
-                  <td>{component.busFactor}</td>
-                  <td>
-                    <RiskBadge level={component.risk} />
-                  </td>
-                  <td>
-                    <button
-                      type="button"
-                      aria-label={`Details for ${component.path}`}
-                      className="rounded px-2 py-0.5 text-blue-700 underline focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none"
-                      onClick={(event) => {
-                        openerRef.current = event.currentTarget;
-                        setSelectedPath(component.path);
-                      }}
-                    >
-                      Details
-                    </button>
-                  </td>
+          {riskMap.components.length === 0 ? (
+            <p className="text-slate-600">No components in the graph yet.</p>
+          ) : (
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Path</th>
+                  <th scope="col">Bus factor</th>
+                  <th scope="col">Risk</th>
+                  <th scope="col">
+                    <span className="sr-only">Actions</span>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {riskMap.components.map((component) => (
+                  <tr
+                    key={component.path}
+                    className="border-t border-slate-200"
+                  >
+                    <td className="py-1 font-mono wrap-anywhere">
+                      {component.path}
+                    </td>
+                    <td>{component.busFactor}</td>
+                    <td>
+                      <RiskBadge level={component.risk} />
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        aria-label={`Details for ${component.path}`}
+                        className="rounded px-2 py-0.5 text-blue-700 underline focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none"
+                        onClick={(event) => {
+                          openerRef.current = event.currentTarget;
+                          setSelectedPath(component.path);
+                        }}
+                      >
+                        Details
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </section>
         <section>
           <h2 className="mb-2 text-xl font-semibold">Team ranking</h2>
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">PageRank</th>
-                <th scope="col">Betweenness</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ranking.slice(0, 15).map(({ person, pageRank, betweenness }) => (
-                <tr key={person.id} className="border-t border-slate-200">
-                  <td className="py-1">{person.name}</td>
-                  <td>{pageRank.toFixed(3)}</td>
-                  <td>{betweenness.toFixed(1)}</td>
+          {ranking.length === 0 ? (
+            <p className="text-slate-600">No people in the graph yet.</p>
+          ) : (
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">PageRank</th>
+                  <th scope="col">Betweenness</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {ranking
+                  .slice(0, 15)
+                  .map(({ person, pageRank, betweenness }) => (
+                    <tr key={person.id} className="border-t border-slate-200">
+                      <td className="py-1">{person.name}</td>
+                      <td>{pageRank.toFixed(3)}</td>
+                      <td>{betweenness.toFixed(1)}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          )}
         </section>
       </div>
     </div>

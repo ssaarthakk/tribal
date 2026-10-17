@@ -20,7 +20,7 @@ function PlanSection({
 }) {
   return (
     <section>
-      <h5 className="font-semibold">{heading}</h5>
+      <h4 className="font-semibold">{heading}</h4>
       {items.length === 0 ? (
         <p className="text-slate-600">None</p>
       ) : (

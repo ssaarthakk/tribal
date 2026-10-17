@@ -43,7 +43,7 @@ export function ComponentPanel({ path, onClose }: ComponentPanelProps) {
           id="component-panel-heading"
           ref={headingRef}
           tabIndex={-1}
-          className="flex items-center gap-2 font-mono text-lg font-semibold focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none"
+          className="flex flex-wrap items-center gap-2 font-mono text-lg font-semibold wrap-anywhere focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none"
         >
           {path}
           {detail && <RiskBadge level={detail.component.risk} />}
@@ -62,18 +62,22 @@ export function ComponentPanel({ path, onClose }: ComponentPanelProps) {
         <>
           <section>
             <h4 className="font-semibold">Experts</h4>
-            <ul className="space-y-1">
-              {detail.experts.map(({ person, share, lastActive, expert }) => (
-                <li key={person.id}>
-                  {person.name}
-                  {person.login && (
-                    <span className="text-slate-600"> ({person.login})</span>
-                  )}
-                  {` · ${String(Math.round(share * 100))}% · last active ${lastActive.slice(0, 10)} `}
-                  {expert && <span className={TAG_CLASS}>expert</span>}
-                </li>
-              ))}
-            </ul>
+            {detail.experts.length === 0 ? (
+              <p className="text-slate-600">None</p>
+            ) : (
+              <ul className="space-y-1">
+                {detail.experts.map(({ person, share, lastActive, expert }) => (
+                  <li key={person.id}>
+                    {person.name}
+                    {person.login && (
+                      <span className="text-slate-600"> ({person.login})</span>
+                    )}
+                    {` · ${String(Math.round(share * 100))}% · last active ${lastActive.slice(0, 10)} `}
+                    {expert && <span className={TAG_CLASS}>expert</span>}
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
           <section>
             <h4 className="font-semibold">Decisions</h4>
