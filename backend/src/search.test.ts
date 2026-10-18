@@ -1,6 +1,11 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import type { Db } from "./db.js";
-import { search, toFullTextQuery, whoKnows } from "./search.js";
+import {
+  search,
+  suggestReviewers,
+  toFullTextQuery,
+  whoKnows,
+} from "./search.js";
 import { withFixtureGraph } from "./test-graph.js";
 
 describe("toFullTextQuery", () => {
@@ -66,5 +71,16 @@ describe("search", () => {
       "bob",
       "alice",
     ]);
+  });
+
+  it("suggests reviewers other than alice for her PR 8", async () => {
+    const suggestion = await suggestReviewers(db, "pr", 8);
+    const ids = suggestion?.reviewers.map((reviewer) => reviewer.person.id);
+    expect(ids?.length).toBeGreaterThan(0);
+    expect(ids).not.toContain("alice");
+  });
+
+  it("returns null for an unknown PR", async () => {
+    expect(await suggestReviewers(db, "pr", 999)).toBeNull();
   });
 });

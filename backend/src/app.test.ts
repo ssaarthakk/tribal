@@ -4,7 +4,13 @@ import { createApp } from "./app.js";
 import { openDb } from "./db.js";
 import { loadEnv } from "./env.js";
 import { RateLimitError, type Llm } from "./llm.js";
-import { getComponent, getRiskMap, getTeamRanking } from "./risk.js";
+import {
+  getComponent,
+  getRiskMap,
+  getStaleDocs,
+  getTeamRanking,
+} from "./risk.js";
+import { suggestReviewers } from "./search.js";
 import { withFixtureGraph } from "./test-graph.js";
 
 const WEB_ORIGIN = "http://localhost:5173";
@@ -89,6 +95,28 @@ describe("fixture routes", () => {
     const response = await request("/api/ranking");
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual(await getTeamRanking(fixture.db));
+  });
+
+  it("GET /api/stale-docs returns the stale docs", async () => {
+    const response = await request("/api/stale-docs");
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual(await getStaleDocs(fixture.db));
+  });
+
+  it("GET /api/suggest-reviewers returns the suggestion", async () => {
+    const response = await request("/api/suggest-reviewers?kind=pr&number=8");
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual(
+      await suggestReviewers(fixture.db, "pr", 8),
+    );
+  });
+
+  it("GET /api/suggest-reviewers returns 404 for an unknown issue", async () => {
+    const response = await request(
+      "/api/suggest-reviewers?kind=issue&number=999",
+    );
+    expect(response.status).toBe(404);
+    expect(await response.json()).toEqual({ error: "not_found" });
   });
 
   it("GET /api/component returns a component", async () => {

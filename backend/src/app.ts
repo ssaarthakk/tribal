@@ -15,9 +15,11 @@ import {
   countNodes,
   getComponent,
   getRiskMap,
+  getStaleDocs,
   getTeamRanking,
   simulateDeparture,
 } from "./risk.js";
+import { suggestReviewers } from "./search.js";
 import { AskRequestSchema, PersonIdRequestSchema } from "./schemas.js";
 
 export type AppDeps = { db: Db; llm: Llm | null; webOrigin: string };
@@ -30,6 +32,7 @@ export function createApp(deps: AppDeps) {
     )
     .get("/api/risk-map", async (c) => c.json(await getRiskMap(deps.db)))
     .get("/api/ranking", async (c) => c.json(await getTeamRanking(deps.db)))
+    .get("/api/stale-docs", async (c) => c.json(await getStaleDocs(deps.db)))
     .get(
       "/api/component",
       zValidator("query", z.object({ path: z.string() })),
@@ -41,6 +44,23 @@ export function createApp(deps: AppDeps) {
         if (component === null)
           return c.json({ error: "not_found" as const }, 404);
         return c.json(component);
+      },
+    )
+    .get(
+      "/api/suggest-reviewers",
+      zValidator(
+        "query",
+        z.object({
+          kind: z.enum(["pr", "issue"]),
+          number: z.coerce.number().int().positive(),
+        }),
+      ),
+      async (c) => {
+        const { kind, number } = c.req.valid("query");
+        const suggestion = await suggestReviewers(deps.db, kind, number);
+        if (suggestion === null)
+          return c.json({ error: "not_found" as const }, 404);
+        return c.json(suggestion);
       },
     )
     .post(

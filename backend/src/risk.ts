@@ -7,17 +7,20 @@ import {
   COMPONENT_EXPERTS,
   COMPONENT_RECENT_PULL_REQUESTS,
   COUNT_NODES,
+  DECISIONS_SINCE,
   DEPARTURE_COMPONENTS,
   DEPARTURE_DECISIONS,
   DEPARTURE_SUCCESSORS,
   GET_COMPONENT,
   GET_PERSON,
   LIST_COMPONENTS,
+  MERGED_PULL_REQUESTS_SINCE,
   NEARBY_COLLABORATORS,
   OPEN_WORK,
   PERSON_COMPONENTS,
   PERSON_DECISIONS,
   RISK_MAP_LINKS,
+  STALE_DOCS,
   TEAM_BETWEENNESS,
   TEAM_PAGERANK,
 } from "./queries.js";
@@ -38,11 +41,15 @@ import {
   type RiskMap,
   RiskMapLinkSchema,
   riskLevel,
+  type StaleDoc,
+  StaleDocSchema,
   type TeamRanking,
   toExpertise,
   toIso,
   WorkItemSchema,
 } from "./schemas.js";
+
+const STALE_DOC_MIN_LINES = 200;
 
 const ComponentRowSchema = ComponentSummarySchema.omit({ risk: true });
 
@@ -193,6 +200,15 @@ export async function getPerson(
   };
 }
 
+export async function getStaleDocs(db: Db): Promise<StaleDoc[]> {
+  const rows = await db.read(
+    STALE_DOCS,
+    { minLines: STALE_DOC_MIN_LINES },
+    StaleDocSchema.extend({ updatedAt: z.number() }),
+  );
+  return rows.map((row) => ({ ...row, updatedAt: toIso(row.updatedAt) }));
+}
+
 export async function getDecisionHistory(
   db: Db,
   componentPath: string,
@@ -286,4 +302,51 @@ export async function simulateDeparture(
       weight,
     })),
   };
+}
+
+export async function digestText(db: Db, since: string): Promise<string> {
+  const params = { since: Date.parse(since) };
+  const decisions = await db.read(
+    DECISIONS_SINCE,
+    params,
+    z.object({ summary: z.string(), sourceUrl: z.string() }),
+  );
+  const pullRequests = await db.read(
+    MERGED_PULL_REQUESTS_SINCE,
+    params,
+    PullRequestRefSchema.omit({ createdAt: true }).extend({
+      componentPath: z.string(),
+    }),
+  );
+  const atRisk = (await listComponents(db)).filter(
+    (component) =>
+      component.risk === "orphaned" || component.risk === "critical",
+  );
+
+  const lines = [`Digest since ${since}`, "", "Decisions"];
+  for (const decision of decisions) {
+    lines.push(`- ${decision.summary} (${decision.sourceUrl})`);
+  }
+  if (decisions.length === 0) lines.push("- None");
+
+  lines.push("", "Merged pull requests");
+  let componentPath = "";
+  for (const pullRequest of pullRequests) {
+    if (pullRequest.componentPath !== componentPath) {
+      componentPath = pullRequest.componentPath;
+      lines.push(componentPath);
+    }
+    lines.push(
+      `- #${String(pullRequest.number)} ${pullRequest.title} (${pullRequest.url})`,
+    );
+  }
+  if (pullRequests.length === 0) lines.push("- None");
+
+  lines.push("", "Orphaned or critical components");
+  for (const component of atRisk) {
+    lines.push(`- ${component.path}: ${component.risk}`);
+  }
+  if (atRisk.length === 0) lines.push("- None");
+
+  return lines.join("\n");
 }

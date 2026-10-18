@@ -1,11 +1,19 @@
 import { z } from "zod";
 import type { Db } from "./db.js";
-import { COMPONENT_EXPERTS, SEARCH_ALL, TOPIC_COMPONENTS } from "./queries.js";
+import {
+  COMPONENT_EXPERTS,
+  GET_ISSUE_TITLE,
+  GET_PULL_REQUEST_TITLE,
+  SEARCH_ALL,
+  TOPIC_COMPONENTS,
+} from "./queries.js";
 import {
   ExpertRowSchema,
   SearchHitSchema,
   SourceSchema,
+  type PersonRef,
   type SearchHit,
+  type Source,
   toExpertise,
   type WhoKnows,
 } from "./schemas.js";
@@ -13,6 +21,7 @@ import {
 const TOPIC_PATH_LIMIT = 3;
 const TOPIC_EXPERT_LIMIT = 5;
 const TOPIC_SOURCE_LIMIT = 10;
+const REVIEWER_LIMIT = 3;
 
 export function toFullTextQuery(text: string): string {
   const words = text
@@ -81,5 +90,39 @@ export async function whoKnows(db: Db, topic: string): Promise<WhoKnows> {
   return {
     components,
     sources: [...sources.values()].slice(0, TOPIC_SOURCE_LIMIT),
+  };
+}
+
+type ReviewerSuggestion = {
+  title: string;
+  reviewers: { person: PersonRef; componentPath: string }[];
+  sources: Source[];
+};
+
+export async function suggestReviewers(
+  db: Db,
+  kind: "pr" | "issue",
+  number: number,
+): Promise<ReviewerSuggestion | null> {
+  const [item] = await db.read(
+    kind === "pr" ? GET_PULL_REQUEST_TITLE : GET_ISSUE_TITLE,
+    { number },
+    z.object({ title: z.string(), authorId: z.string().nullable() }),
+  );
+  if (item === undefined) return null;
+
+  const { components, sources } = await whoKnows(db, item.title);
+  const reviewers = new Map<string, ReviewerSuggestion["reviewers"][number]>();
+  for (const component of components) {
+    for (const { person } of component.experts) {
+      if (person.id !== item.authorId && !reviewers.has(person.id)) {
+        reviewers.set(person.id, { person, componentPath: component.path });
+      }
+    }
+  }
+  return {
+    title: item.title,
+    reviewers: [...reviewers.values()].slice(0, REVIEWER_LIMIT),
+    sources,
   };
 }

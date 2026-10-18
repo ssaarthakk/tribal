@@ -1,9 +1,13 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { countByLabel, countByRelationship } from "./load.js";
+import { z } from "zod";
+import { countByLabel, countByRelationship, loadSnapshot } from "./load.js";
+import { STALE_DOCS } from "./queries.js";
 import {
+  digestText,
   getComponent,
   getPerson,
   getRiskMap,
+  getStaleDocs,
   getTeamRanking,
   simulateDeparture,
 } from "./risk.js";
@@ -343,5 +347,79 @@ describe("simulateDeparture", () => {
     await simulateDeparture(fixture.db, "alice");
     expect(await countByLabel(fixture.db)).toEqual(labels);
     expect(await countByRelationship(fixture.db)).toEqual(relationships);
+  });
+});
+
+describe("STALE_DOCS", () => {
+  const StaleRowSchema = z.object({
+    path: z.string(),
+    componentPath: z.string(),
+  });
+
+  it("finds no stale docs in the fixture", async () => {
+    expect(
+      await fixture.db.read(STALE_DOCS, { minLines: 0 }, StaleRowSchema),
+    ).toEqual([]);
+    expect(await getStaleDocs(fixture.db)).toEqual([]);
+  });
+
+  it("flags docs/db.md for both its components when it is old", async () => {
+    const other = await withFixtureGraph();
+    try {
+      await loadSnapshot(
+        other.db,
+        {
+          ...other.snapshot,
+          docs: other.snapshot.docs.map((doc) =>
+            doc.path === "docs/db.md"
+              ? { ...doc, updatedAt: "2025-01-01T00:00:00.000Z" }
+              : doc,
+          ),
+        },
+        { entries: [] },
+      );
+      const rows = await other.db.read(
+        STALE_DOCS,
+        { minLines: 0 },
+        StaleRowSchema,
+      );
+      expect(rows).toHaveLength(2);
+      expect(rows).toEqual(
+        expect.arrayContaining([
+          { path: "docs/db.md", componentPath: "docs" },
+          { path: "docs/db.md", componentPath: "src/db" },
+        ]),
+      );
+    } finally {
+      await other.cleanup();
+    }
+  });
+});
+
+describe("digestText", () => {
+  it("lists merged PRs per component and risky components since a date", async () => {
+    expect(await digestText(fixture.db, "2026-09-01")).toBe(
+      [
+        "Digest since 2026-09-01",
+        "",
+        "Decisions",
+        "- None",
+        "",
+        "Merged pull requests",
+        "docs",
+        `- #7 Document the pool (${FIXTURE_URL}/pull/7)`,
+        "src/auth",
+        `- #4 Add login form handler (${FIXTURE_URL}/pull/4)`,
+        "src/db",
+        `- #1 Add connection pool (${FIXTURE_URL}/pull/1)`,
+        "src/ui",
+        `- #5 Add app shell (${FIXTURE_URL}/pull/5)`,
+        `- #6 Add focus ring to buttons (${FIXTURE_URL}/pull/6)`,
+        "",
+        "Orphaned or critical components",
+        "- src/auth: critical",
+        "- src/db: critical",
+      ].join("\n"),
+    );
   });
 });

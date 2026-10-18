@@ -3,11 +3,12 @@ import type { Db } from "./db.js";
 import {
   getComponent,
   getPerson,
+  getStaleDocs,
   getTeamRanking,
   listComponents,
   simulateDeparture,
 } from "./risk.js";
-import { search, whoKnows } from "./search.js";
+import { search, suggestReviewers, whoKnows } from "./search.js";
 import type {
   GraphPath,
   PersonRef,
@@ -65,6 +66,10 @@ function decisionNode(decision: { id: string; summary: string }): PathNode {
     kind: "decision",
     label: decision.summary.slice(0, DECISION_LABEL_LENGTH),
   };
+}
+
+function docNode(doc: { path: string; title: string }): PathNode {
+  return { id: `doc:${doc.path}`, kind: "doc", label: doc.title };
 }
 
 function link(source: PathNode, type: string, target: PathNode): PathLink {
@@ -167,11 +172,7 @@ export const tools: Tool[] = [
       const component = componentNode(path);
       const experts = detail.experts.map((expert) => personNode(expert.person));
       const decisions = detail.decisions.map(decisionNode);
-      const docs = detail.docs.map((doc): PathNode => ({
-        id: `doc:${doc.path}`,
-        kind: "doc",
-        label: doc.title,
-      }));
+      const docs = detail.docs.map(docNode);
       return {
         data: detail,
         sources: [
@@ -305,6 +306,60 @@ export const tools: Tool[] = [
             ),
             ...supersedes,
           ],
+        ),
+      };
+    },
+  ),
+  defineTool(
+    "stale_docs",
+    "List docs whose component changed significantly after the doc was last updated.",
+    z.object({}),
+    async (db) => {
+      const staleDocs = await getStaleDocs(db);
+      const sources = new Map(
+        staleDocs.map((doc) => [doc.url, { title: doc.title, url: doc.url }]),
+      );
+      return {
+        data: staleDocs,
+        sources: [...sources.values()],
+        path: graphPath(
+          staleDocs.flatMap((doc) => [
+            docNode(doc),
+            componentNode(doc.componentPath),
+          ]),
+          staleDocs.map((doc) =>
+            link(docNode(doc), "DESCRIBES", componentNode(doc.componentPath)),
+          ),
+        ),
+      };
+    },
+  ),
+  defineTool(
+    "suggest_reviewers",
+    "Suggest up to three reviewers for a pull request or issue from expertise on the components it relates to, excluding its author.",
+    z.object({
+      kind: z.enum(["pr", "issue"]),
+      number: z.number().int().positive(),
+    }),
+    async (db, { kind, number }) => {
+      const suggestion = await suggestReviewers(db, kind, number);
+      if (suggestion === null) return NOT_FOUND;
+
+      return {
+        data: suggestion,
+        sources: suggestion.sources,
+        path: graphPath(
+          suggestion.reviewers.flatMap((reviewer) => [
+            personNode(reviewer.person),
+            componentNode(reviewer.componentPath),
+          ]),
+          suggestion.reviewers.map((reviewer) =>
+            link(
+              personNode(reviewer.person),
+              "KNOWS_ABOUT",
+              componentNode(reviewer.componentPath),
+            ),
+          ),
         ),
       };
     },

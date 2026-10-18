@@ -228,6 +228,24 @@ export const COMPONENT_DOCS = `MATCH (d:Doc)-[:DESCRIBES]->(:Component {path: $p
 RETURN d.path AS path, d.title AS title, d.url AS url, d.updated_at AS updatedAt
 ORDER BY path`;
 
+export const STALE_DOCS = `MATCH (d:Doc)-[:DESCRIBES]->(c:Component)<-[:PART_OF]-(:File)<-[m:MODIFIES]-(cm:Commit)
+WHERE cm.authored_at > d.updated_at
+WITH d, c, sum(m.additions + m.deletions) AS linesSince, count(DISTINCT cm) AS commitsSince
+WHERE linesSince >= $minLines
+RETURN d.path AS path, d.title AS title, d.url AS url, d.updated_at AS updatedAt, c.path AS componentPath, linesSince, commitsSince
+ORDER BY linesSince DESC`;
+
+export const DECISIONS_SINCE = `MATCH (d:Decision)
+WHERE d.decided_at >= $since
+RETURN d.summary AS summary, d.source_url AS sourceUrl
+ORDER BY d.decided_at, d.id`;
+
+export const MERGED_PULL_REQUESTS_SINCE = `MATCH (pr:PullRequest)-[:CONTAINS]->(:Commit)-[:MODIFIES]->(:File)-[:PART_OF]->(c:Component)
+WHERE pr.merged_at >= $since
+WITH DISTINCT c, pr
+RETURN c.path AS componentPath, pr.number AS number, pr.title AS title, pr.url AS url
+ORDER BY componentPath, number`;
+
 export const PERSON_COMPONENTS = `MATCH (:Person {id: $personId})-[k:KNOWS_ABOUT]->(c:Component)
 RETURN c.path AS componentPath, k.score AS score, k.share AS share, k.last_active AS lastActive, k.expert AS expert
 ORDER BY score DESC, componentPath`;
@@ -340,3 +358,11 @@ UNION ALL
 CALL db.idx.fulltext.queryNodes('Doc', $query) YIELD node, score
 MATCH (node)-[:DESCRIBES]->(c:Component)
 RETURN c.path AS path, score, node.title AS title, node.url AS url`;
+
+export const GET_PULL_REQUEST_TITLE = `MATCH (pr:PullRequest {number: $number})
+OPTIONAL MATCH (a:Person)-[:AUTHORED]->(pr)
+RETURN pr.title AS title, a.id AS authorId`;
+
+export const GET_ISSUE_TITLE = `MATCH (i:Issue {number: $number})
+OPTIONAL MATCH (a:Person)-[:AUTHORED]->(i)
+RETURN i.title AS title, a.id AS authorId`;

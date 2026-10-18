@@ -58,6 +58,11 @@ export const DocRefSchema = z.object({
   url: z.string(),
   updatedAt: z.string(),
 });
+export const StaleDocSchema = DocRefSchema.extend({
+  componentPath: z.string(),
+  linesSince: z.number().int(),
+  commitsSince: z.number().int(),
+});
 export const PullRequestRefSchema = z.object({
   number: z.number().int(),
   title: z.string(),
@@ -227,6 +232,7 @@ export type ComponentSummary = z.infer<typeof ComponentSummarySchema>;
 export type RiskMap = z.infer<typeof RiskMapSchema>;
 export type DecisionView = z.infer<typeof DecisionViewSchema>;
 export type ComponentDetail = z.infer<typeof ComponentDetailSchema>;
+export type StaleDoc = z.infer<typeof StaleDocSchema>;
 export type PersonDetail = z.infer<typeof PersonDetailSchema>;
 export type DepartureReport = z.infer<typeof DepartureReportSchema>;
 export type TeamRanking = z.infer<typeof TeamRankingSchema>;

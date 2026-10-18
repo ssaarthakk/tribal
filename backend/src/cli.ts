@@ -1,3 +1,4 @@
+import { z } from "zod";
 import {
   DATA_FILES,
   DecisionCacheSchema,
@@ -17,7 +18,7 @@ import { buildSnapshot } from "./ingest.js";
 import { createLlm } from "./llm.js";
 import { countByLabel, countByRelationship, loadSnapshot } from "./load.js";
 import { startMcpServer } from "./mcp.js";
-import { getTeamRanking, simulateDeparture } from "./risk.js";
+import { digestText, getTeamRanking, simulateDeparture } from "./risk.js";
 import { startServer } from "./server.js";
 
 const USAGE = `Usage: npm --workspace backend run cli -- <command>
@@ -28,7 +29,8 @@ Commands:
   load [--fixture] Rebuild the graph from the data files
   extract-decisions  Extract decisions from PR and issue threads with the LLM
   handovers        Cache handover plans for the top 5 people with the LLM
-  mcp              Start the MCP server on stdio`;
+  mcp              Start the MCP server on stdio
+  digest --since YYYY-MM-DD  Print decisions, merged PRs and risky components since a date`;
 
 async function fetchCommand(): Promise<void> {
   const config = await readJsonFile(DATA_FILES.config, RepoConfigSchema);
@@ -123,6 +125,26 @@ async function handoversCommand(): Promise<void> {
   }
 }
 
+async function digestCommand(since: string): Promise<void> {
+  const env = loadEnv();
+  const db = await openDb(env, env.FALKORDB_GRAPH);
+  try {
+    console.log(await digestText(db, since));
+  } finally {
+    await db.close();
+  }
+}
+
+function sinceArgument(): string {
+  const value = process.argv[process.argv.indexOf("--since") + 1];
+  const parsed = z.iso.date().safeParse(value);
+  if (!parsed.success) {
+    console.error(USAGE);
+    process.exit(1);
+  }
+  return parsed.data;
+}
+
 switch (process.argv[2]) {
   case "serve":
     await startServer(loadEnv());
@@ -138,6 +160,9 @@ switch (process.argv[2]) {
     break;
   case "handovers":
     await handoversCommand();
+    break;
+  case "digest":
+    await digestCommand(sinceArgument());
     break;
   case "mcp":
     await startMcpServer(loadEnv());

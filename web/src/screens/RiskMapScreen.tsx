@@ -3,6 +3,7 @@ import type {
   ComponentSummary,
   RiskLevel,
   RiskMap,
+  StaleDoc,
   TeamRanking,
 } from "../../../backend/src/schemas";
 import { api } from "../api";
@@ -43,18 +44,28 @@ export function riskMapGraph(
 export function RiskMapScreen() {
   const [riskMap, setRiskMap] = useState<RiskMap | null>(null);
   const [ranking, setRanking] = useState<TeamRanking | null>(null);
+  const [staleDocs, setStaleDocs] = useState<StaleDoc[] | null>(null);
   const [failed, setFailed] = useState(false);
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
   const openerRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    Promise.all([api.api["risk-map"].$get(), api.api.ranking.$get()])
-      .then(async ([riskMapResponse, rankingResponse]) => {
-        if (!riskMapResponse.ok || !rankingResponse.ok) {
+    Promise.all([
+      api.api["risk-map"].$get(),
+      api.api.ranking.$get(),
+      api.api["stale-docs"].$get(),
+    ])
+      .then(async ([riskMapResponse, rankingResponse, staleDocsResponse]) => {
+        if (
+          !riskMapResponse.ok ||
+          !rankingResponse.ok ||
+          !staleDocsResponse.ok
+        ) {
           throw new Error("Request failed");
         }
         setRiskMap(await riskMapResponse.json());
         setRanking(await rankingResponse.json());
+        setStaleDocs(await staleDocsResponse.json());
       })
       .catch(() => {
         setFailed(true);
@@ -81,7 +92,8 @@ export function RiskMapScreen() {
   );
 
   if (failed) return <p role="alert">Could not load the risk map.</p>;
-  if (!riskMap || !ranking) return <p role="status">Loading risk map...</p>;
+  if (!riskMap || !ranking || !staleDocs)
+    return <p role="status">Loading risk map...</p>;
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -191,6 +203,51 @@ export function RiskMapScreen() {
                       <td>{betweenness.toFixed(1)}</td>
                     </tr>
                   ))}
+              </tbody>
+            </table>
+          )}
+        </section>
+        <section>
+          <h2 className="mb-2 text-xl font-semibold">Stale docs</h2>
+          {staleDocs.length === 0 ? (
+            <p className="text-slate-600">
+              No docs fell behind their components.
+            </p>
+          ) : (
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Doc</th>
+                  <th scope="col">Component</th>
+                  <th scope="col">Last updated</th>
+                  <th scope="col">Lines changed since</th>
+                  <th scope="col">Commits since</th>
+                </tr>
+              </thead>
+              <tbody>
+                {staleDocs.map((doc) => (
+                  <tr
+                    key={`${doc.path} ${doc.componentPath}`}
+                    className="border-t border-slate-200"
+                  >
+                    <td className="py-1 wrap-anywhere">
+                      <a
+                        href={doc.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-700 underline focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none"
+                      >
+                        {doc.title}
+                      </a>
+                    </td>
+                    <td className="font-mono wrap-anywhere">
+                      {doc.componentPath}
+                    </td>
+                    <td>{doc.updatedAt.slice(0, 10)}</td>
+                    <td>{doc.linesSince}</td>
+                    <td>{doc.commitsSince}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           )}

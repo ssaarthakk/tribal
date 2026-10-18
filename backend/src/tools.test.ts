@@ -26,7 +26,7 @@ describe("tools", () => {
     await fixture.cleanup();
   });
 
-  it("defines the eight tools in order", () => {
+  it("defines the ten tools in order", () => {
     expect(tools.map((candidate) => candidate.name)).toEqual([
       "search",
       "who_knows",
@@ -36,6 +36,8 @@ describe("tools", () => {
       "simulate_departure",
       "team_ranking",
       "decision_history",
+      "stale_docs",
+      "suggest_reviewers",
     ]);
   });
 
@@ -70,6 +72,7 @@ describe("tools", () => {
     ["simulate_departure", { personId: "alice" }],
     ["team_ranking", {}],
     ["decision_history", { componentPath: "src/api" }],
+    ["suggest_reviewers", { kind: "pr", number: 8 }],
   ])("%s returns a valid graph path", async (name, args) => {
     const result = await tool(name).run(db, args);
     expect(GraphPathSchema.parse(result.path).nodes.length).toBeGreaterThan(0);

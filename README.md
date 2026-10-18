@@ -131,6 +131,9 @@ Every query lives in [`backend/src/queries.ts`](backend/src/queries.ts) as a nam
 - `COMPONENT_EXPERTS`: lists the people who know a component best (component panel, `who_knows`). F3, F6, F9.
 - `COMPONENT_DECISIONS`: lists the decisions affecting a component with who made them and what they supersede (`decision_history`). F5, F6, F9.
 - `COMPONENT_DOCS`: lists the docs that describe a component. F6, F9.
+- `STALE_DOCS`: lists docs whose component had at least 200 changed lines after the doc was last updated (`stale_docs` tool, `/api/stale-docs`, Risk map table). S1.
+- `DECISIONS_SINCE`: lists decisions made since a date (`digest` command). S2.
+- `MERGED_PULL_REQUESTS_SINCE`: lists PRs merged since a date with the components they touch (`digest` command). S2.
 - `COMPONENT_RECENT_PULL_REQUESTS`: lists the latest PRs that touched a component. F6, F9.
 - `GET_PERSON`: reads one person by id. F4c, F6.
 - `PERSON_COMPONENTS`: lists the components a person knows, with score and expert flag. F6.
@@ -147,6 +150,7 @@ Every query lives in [`backend/src/queries.ts`](backend/src/queries.ts) as a nam
 
 - `SEARCH_ALL`: full-text search over PRs, issues, decisions and docs, top 5 of each (`search` tool). F6, F8.
 - `TOPIC_COMPONENTS`: maps full-text hits to the components they touch, the first step of `who_knows`. F6, F8.
+- `GET_PULL_REQUEST_TITLE`, `GET_ISSUE_TITLE`: read a PR's or issue's title and author, so `suggest_reviewers` (and `/api/suggest-reviewers?kind=pr&number=8`) can run `who_knows` on the title and suggest the top 3 experts other than the author. S3.
 
 ### FalkorDB procedures
 
@@ -216,9 +220,15 @@ Requires Node.js 24 (see `.nvmrc`) and Bash (on Windows, run the commands from G
    npm --workspace backend run cli -- load
    ```
 
+5. Print a digest of what changed since a date (new decisions, merged PRs per component, orphaned and critical components):
+
+   ```bash
+   npm --workspace backend run cli -- digest --since 2026-09-01
+   ```
+
 ## MCP server
 
-Tribal exposes its eight tools (`search`, `who_knows`, `bus_factor`, `get_component`, `get_person`, `simulate_departure`, `team_ranking`, `decision_history`) over MCP on stdio. Build the backend first:
+Tribal exposes its ten tools (`search`, `who_knows`, `bus_factor`, `get_component`, `get_person`, `simulate_departure`, `team_ranking`, `decision_history`, `stale_docs`, `suggest_reviewers`) over MCP on stdio. Build the backend first:
 
 ```bash
 npm --workspace backend run build

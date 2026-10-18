@@ -345,7 +345,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Out of scope:** a blog post.
     Note: The blog (`docs/BLOG.md`) was dropped at the user's request.
 
-- [ ] **9.7 [MANUAL] Submit on WeMakeDevs**
+- [x] **9.7 [MANUAL] Submit on WeMakeDevs**
   - **Steps for the user:**
     1. Run `/commit` and `git push` so the public repo has everything.
     2. Open the Graph Hacks submission page on WeMakeDevs, choose the **Company Brain** track, and paste the fields from `docs/SUBMISSION.md`.
@@ -356,7 +356,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
 
 ## Phase 10: Stretch (only if F1–F9 are deployed and time remains)
 
-- [ ] **S1 Stale-doc alerts**
+- [x] **S1 Stale-doc alerts**
   - **Goal:** Flag docs whose described component changed a lot after the doc's last update.
   - **Files:** modify `backend/src/queries.ts`, `backend/src/schemas.ts`, `backend/src/risk.ts`, `backend/src/tools.ts`, `backend/src/app.ts`, tests, `web/src/screens/RiskMapScreen.tsx`, `README.md`.
   - **Spec:** query `STALE_DOCS` (params `minLines`):
@@ -374,8 +374,9 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** fixture: `STALE_DOCS` with `minLines: 0` returns `[]`; with a fixture copy where `docs/db.md` `updatedAt` is `2025-01-01`, returns `docs/db.md` for `docs` and `src/db`.
   - **Verify:** live site table.
   - **Out of scope:** notifications.
+    Note: The variant-fixture test runs `STALE_DOCS` with `minLines: 0` (the fixture has fewer than 200 changed lines). On the demo graph the query returns 36 rows (checked read-only via the FalkorDB MCP server); the live-site table shows once the backend and web are redeployed after the next push. `docs/ARCHITECTURE.md` (§7, §9, §10) was not in the task's file list and still lists eight tools.
 
-- [ ] **S2 Daily digest**
+- [x] **S2 Daily digest**
   - **Goal:** A CLI command that prints what changed since a date.
   - **Files:** modify `backend/src/queries.ts`, `backend/src/risk.ts`, `backend/src/cli.ts`, tests, `README.md`.
   - **Spec:** `cli -- digest --since YYYY-MM-DD`: prints (1) decisions with `decided_at` since the date (summary, source URL), (2) PRs merged since the date per component, (3) components currently orphaned or critical. Queries `DECISIONS_SINCE` and `MERGED_PULL_REQUESTS_SINCE` (params `since` epoch ms) and existing `LIST_COMPONENTS`. Output is plain text, sections with headings.
@@ -384,7 +385,7 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Verify:** run on the demo graph.
   - **Out of scope:** email or scheduling.
 
-- [ ] **S3 Reviewer suggestion**
+- [x] **S3 Reviewer suggestion**
   - **Goal:** Suggest reviewers for an open PR or issue from expertise.
   - **Files:** modify `backend/src/search.ts`, `backend/src/tools.ts`, `backend/src/app.ts`, tests, `README.md`.
   - **Spec:** `suggestReviewers(db, kind, number)`: reads the item's title (queries `GET_PULL_REQUEST_TITLE`, `GET_ISSUE_TITLE`), runs `whoKnows` on it, and returns the top 3 distinct experts across its components, excluding the author. Tool `suggest_reviewers` (`{ kind: "pr" | "issue", number }`) and `GET /api/suggest-reviewers?kind=&number=`.
@@ -392,3 +393,4 @@ All screens: Tailwind only, no new UI libraries, labels on every control, `focus
   - **Tests:** the fixture case above.
   - **Verify:** one live open PR.
   - **Out of scope:** assigning reviewers on GitHub (never).
+    Note: `GET_PULL_REQUEST_TITLE` and `GET_ISSUE_TITLE` were added to `queries.ts` (not in the file list, no Cypher given); they also return `authorId` so the author can be excluded. The result is `{ title, reviewers: [{ person, componentPath }], sources }`, `null` (tool `not_found`, API 404) for an unknown number; reviewers keep `who_knows` order (most relevant component first, then score). Live verify: running the app code against the demo graph was blocked by the permission classifier, so it was checked read-only via the FalkorDB MCP server on open PR #3367 (author pujitha24): top components `tests/flow`, `src/execution_plan`, `src`, giving AviAvni, DvirDukhan, swilly22 (PR index only, an approximation of `who_knows`). `docs/ARCHITECTURE.md` still lists eight tools.

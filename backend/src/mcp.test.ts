@@ -40,7 +40,7 @@ describe("MCP server", () => {
     return DataSchema.parse(JSON.parse(result.content[0].text)).data;
   }
 
-  it("lists the eight tools with their descriptions", async () => {
+  it("lists the ten tools with their descriptions", async () => {
     const { tools: listed } = await client.listTools();
     expect(
       listed.map((tool) => ({
@@ -50,6 +50,10 @@ describe("MCP server", () => {
     ).toEqual(
       tools.map((tool) => ({ name: tool.name, description: tool.description })),
     );
+  });
+
+  it("returns no stale docs for the fixture", async () => {
+    expect(await callData("stale_docs", {})).toEqual([]);
   });
 
   it("returns the six components for bus_factor", async () => {
